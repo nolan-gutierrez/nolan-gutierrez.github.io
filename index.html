@@ -198,6 +198,54 @@
       
       var canvas = document.getElementById("paint");
       var context = canvas.getContext('2d');
+chunks = [];
+      
+      }
+      function sendJSON(){
+var totalTime = (new Date()) - startExpTime;
+  var newDate = new Date();
+  $('#assignmentId').val(GetAssignmentId());
+  var curID = (IsOnTurk())? GetAssignmentId() : prompt("Doesn't look like you " + 
+  "are on Turk, so you're probably testing. Enter an ID to save your data with:", "id");
+                 var blob = new Blob(chunks, { 'type' : 'video/webm' });
+                 console.log(blob)
+                console.log(chunks);
+                var formData = new FormData();
+   formData.append("curID", curID,) 
+    formData.append("workerID", GetWorkerId(),)
+    formData.append("curTime", newDate.today() + " @ " + newDate.timeNow(),)
+    formData.append("userAgent", navigator.userAgent),
+    formData.append("windowWidth", $(window).width()),
+    formData.append("windowHeight", $(window).height(),)
+    formData.append("screenWidth", screen.width),
+    formData.append("screenHeight", screen.height),   
+    formData.append("totalTime", totalTime,)                
+formData.append('blob', blob);
+                formData.append('Shape', selected_word1);
+                formData.append('Movement',selected_word2);
+                formData.append('Location', selected_word3);
+                formData.append('Speed', selected_word3);
+                console.log(formData)
+                chunks = [];
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "http://www.behaviors.ddns.net:8080/json_handler.php",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function(image)
+                    {
+                        // whatever you want to do 
+                    }
+                });
+          
+          
+      
+        
+      }
       context.clearRect(0, 0, canvas.width, canvas.height)
                     processData: false,
                     contentType: false,
