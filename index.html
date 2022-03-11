@@ -103,7 +103,7 @@
 						<script>
       // This part of the code is used for generating the random words to describe
       // the task being completed.
-
+      var startExpTime = null;
      
       let words1 = "square circle spiral triangle zero one two three four five six seven eight nine";
       var words1Array = words1.split(' ');
@@ -366,6 +366,8 @@ function turkSetAssignmentID( form_name, button_name ) {
         
             if (mediaRecorder.state != "recording"){
                 mediaRecorder.start()
+                startExpTime = new Date();
+                
             }
             canvas.addEventListener('mousemove', onPaint, false);
             setTimeout(function(){mediaRecorder.stop();}, 30000);
