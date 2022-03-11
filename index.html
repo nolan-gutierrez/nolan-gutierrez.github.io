@@ -1,29 +1,299 @@
-
+<!-- You must include this JavaScript file 
+   -->
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Hank Quinlan, Horrible Cop</title>
-	</head>
-	<body>
-		<nav>
-    		<ul>
-        		<li><a href="/">Home</a></li>
-	        	<li><a href="/about">About</a></li>
-        		<li><a href="/cv">CV</a></li>
-        		<li><a href="/blog">Blog</a></li>
-    		</ul>
-		</nav>
-		<div class="container">
-    		<div class="blurb">
-        		<h1>Hi there, I'm Hank Quinlan!</h1>
-				<p>I'm best known as the horrible cop from <em>A Touch of Evil</em> Don't trust me. <a href="/about">Read more about my life...</a></p>
-    		</div><!-- /.blurb -->
-		</div><!-- /.container -->
-		<footer>
-    		<ul>
-        		<li><a href="mailto:hankquinlanhub@gmail.com">email</a></li>
-        		<li><a href="https://github.com/hankquinlan">github.com/hankquinlan</a></li>
-			</ul>
-		</footer>
-	</body>
+<head>
+   <title>Drawing Behaviors</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+   <!-- bootbox.js at 4.4.0 -->
+   <script src="https://rawgit.com/makeusabrew/bootbox/f3a04a57877cab071738de558581fbc91812dce9/bootbox.js"></script>
+</head>
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+   please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+<div class="container mt-5">
+   <h2>Collection for a Drawing Dataset</h2>
+   <div class="row">
+      <div class ="col">
+         <div class="mt-4 p-5 bg-dark text-white rounded">
+            <div class = "row">
+               <div class = "col">
+                  <p>
+                     <strong>Instructions: </strong>
+                    <!-- 
+                     This interface will be used for making trajectories with the four
+                     characteristics  seen below.  After you are finished drawing, 
+                     you will see video playback below the canvas. The first 
+                     characteristic indicates what type of object should be drawn in the position 
+                     indicated by the third characteristic.  The second characteristic indicates 
+                     the type of trajectory the artist must create in accordance with
+                     the other characteristics. Location marks both the end of the trajectory 
+                     and where the shape must be drawn. Finally, the fourth characteristic is the 
+                     speed at which the drawing should be made.  Before confirming your submission, 
+                     you should make sure that the video playback of your drawing contains all of 
+                     the following characteristics: 
+                    --> 
+                    Please input your drawing in the canvas as per instructions. 
+
+                    The instructions consist of four characteristic components: 
+
+                   
+                    <br> 
+
+                    1. Shape: The object/shape to be drawn. 
+                    </br>
+                    
+                    <br> 
+
+                    2. Trajectory: The initial trajectory to draw before 
+                    starting with shape drawing
+                    </br>
+                    
+                    <br> 
+
+                    3. Location: Location where the shape must start
+                    </br>
+                    
+                    <br> 
+
+                    4. Speed: Speed of entire drawing (Trajectory + Shape) 
+                    </br>
+                    
+                   
+                    
+                   
+                    
+                  </p>
+                     <div>
+                        For further instructions, please see following example video:
+                     </div>
+                  <div class = "row">
+                     <div class = "row">
+                        <div class = "col">
+                           <iframe width="560" height="315" src="https://www.youtube.com/embed/MzIbj4Xwo5E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
+                        </div>
+                     </div>
+                     <p id=behavior_words> </p>
+
+
+                  </div>
+                  <div class="container mt-5">
+                  </div>
+               </div>
+               <div class = "col">
+                  <div class = "col">
+                     <div id="sketch" class="row">
+                        <div class="col">
+                           <canvas id="paint" style="background-color: white"width = 480 height = 360 class="border border-dark rounded">
+                           We're sorry, the browser you are using does not support 
+                           <canvas>
+                              . Please upgrade your browser. 
+                              <!--Anything inside of the canvas tag will only display if the browser does not support the <canvas> tag.-->
+                           </canvas>
+                        </div>
+                        <div class="col">
+                           <video id="video1" class="border border-dark rounded" width = 480 height = 360 autoplay controls></video>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div style="text-align: center">
+      <input id="smit" class="btn btn-primary w-100" type="submit" value="Submit">
+   </div>
+</div>
+<body>
+   <!-- You must include crowd-form so that your task submits answers to MTurk -->
+   <script>
+      // This part of the code is used for generating the random words to describe
+      // the task being completed.
+      let words1 = "square circle spiral triangle zero one two three four five six seven eight nine";
+      var words1Array = words1.split(' ');
+      console.log(words1Array)
+      let words2 = "moving_left moving_right moving_down moving_up moving_in_circle moving_in_square moving_around_canvas moving_randomly moving_in_oval moving_in_diamond moving_in_triangle";
+      var words2Array = words2.split(' ');
+      console.log(words2Array)
+      let words3 = "top_left top_right bottom_right bottom_left center" 
+      var words3Array = words3.split(' ');
+      let words4 = "slow fast" 
+      var words4Array = words4.split(' ');
+      console.log(words3Array)
+      var selected_word1  = words1Array[Math.floor(Math.random()*words1Array.length)];
+      var selected_word2  = words2Array[Math.floor(Math.random()*words2Array.length)].replaceAll('_',' ');
+      var selected_word3  = words3Array[Math.floor(Math.random()*words3Array.length)].replaceAll('_',' ');
+      var selected_word4  = words4Array[Math.floor(Math.random()*words4Array.length)];
+      var task = "<table style='width:100%'> <tr> <th>Shape:</th>  <th>" +
+selected_word1 + "</th> </tr><br>"  + "<tr> <th>Trajectory:</th> <th>" +
+selected_word2 + "</th> </tr><br>"  + "<tr> <th>Location: </th> <th>"+ selected_word3 + "</th> </tr>"  + "<tr> <th>Speed: </th> <th>"+ selected_word4 + "</th> </tr>  </table>";
+      console.log(task)
+      document.getElementById("behavior_words").innerHTML = task;
+      
+      // This code is used for creating the media recorder associated with the
+      // canvas element.
+      var canvas = document.getElementById("paint");
+      //  canvas.width = window.innerWidth
+      // canvas.height = window.innerHeight
+      console.log(canvas)
+      var context = canvas.getContext("2d");
+      var videoStream = canvas.captureStream(30); 
+      var mediaRecorder = new MediaRecorder(videoStream);
+      var video = document.getElementById("video1"); 
+      console.log(video);
+      var chunks = [];
+      mediaRecorder.ondataavailable = function(e) {
+        chunks.push(e.data);
+      };
+      mediaRecorder.onstop = function(e) {
+        var blob = new Blob(chunks, { 'type' : 'video/mp4' });
+        var videoURL = URL.createObjectURL(blob);
+        video.src = videoURL;
+      };
+      
+      function onPaint() {
+            ctx.beginPath();
+            ctx.moveTo(last_mouse.x, last_mouse.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.closePath();
+            ctx.stroke();
+      }
+      
+      // This function is going to be used for adding event listeners
+      function confirm_dialog() {
+            bootbox.dialog({
+        message: "Do you wish to confirm this drawing??",
+        buttons: {
+            ok: {
+                label: 'Yes',
+                className: 'btn-success',
+                callback: sendJSON
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger',
+                callback: clearboard
+            }
+        },
+        callback: function (result) {
+            console.log('This was logged in the callback: ' + result);
+        }
+      });        
+      
+      
+       canvas.removeEventListener('mousemove', onPaint, false);
+       mediaRecorder.stop()
+      
+      
+      }
+      var smit = document.getElementById("smit");
+      console.log(smit);
+      if(smit.addEventListener){
+        console.log(smit.addEventListener);
+        smit.addEventListener("click", confirm_dialog ,false);
+      } 
+      else{
+        //ie doesn't have addEventListner
+        smit.attachEvent('onsubmit', confirm_dialog );
+      }
+      
+      
+      
+      // Clear the canvas
+      function clearboard(){
+      
+      var canvas = document.getElementById("paint");
+      var context = canvas.getContext('2d');
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      chunks = [];
+      
+      }
+      function sendJSON(){
+                 var blob = new Blob(chunks, { 'type' : 'video/webm' });
+                 console.log(blob)
+                console.log(chunks);
+                var formData = new FormData();
+                formData.append('blob', blob);
+                formData.append('Shape', selected_word1);
+                formData.append('Movement',selected_word2);
+                formData.append('Location', selected_word3);
+                formData.append('Speed', selected_word3);
+                console.log(formData)
+                chunks = [];
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "http://www.behaviors.ddns.net:8080/json_handler.php",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function(image)
+                    {
+                        // whatever you want to do 
+                    }
+                });
+          
+          
+      
+        
+      }
+      (function() {
+        var canvas = document.querySelector('#paint');
+        var ctx = canvas.getContext('2d');
+      
+        var sketch = document.querySelector('#sketch');
+        var sketch_style = getComputedStyle(sketch);
+      //    canvas.width = parseInt(sketch_style.getPropertyValue('width'));
+      //    canvas.height = parseInt(sketch_style.getPropertyValue('height'));
+      
+        var mouse = {x: 0, y: 0};
+        var last_mouse = {x: 0, y: 0};
+      
+        /* Mouse Capturing Work */
+        canvas.addEventListener('mousemove', function(e) {
+            last_mouse.x = mouse.x;
+            last_mouse.y = mouse.y;
+      
+            mouse.x = e.pageX - this.offsetLeft;
+            mouse.y = e.pageY - this.offsetTop;
+        }, false);
+      
+      
+        /* Drawing on Paint App */
+        ctx.lineWidth = "15";
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = 'green';
+      
+        canvas.addEventListener('mousedown', function(e) {
+        
+            if (mediaRecorder.state != "recording"){
+                mediaRecorder.start()
+            }
+            canvas.addEventListener('mousemove', onPaint, false);
+            setTimeout(function(){mediaRecorder.stop();}, 30000);
+        }, false);
+      
+        canvas.addEventListener('mouseup', function(){
+         canvas.removeEventListener('mousemove', onPaint, false);
+      
+      
+      }, false);
+      
+        var onPaint = function() {
+            ctx.beginPath();
+            ctx.moveTo(last_mouse.x, last_mouse.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.closePath();
+            ctx.stroke();
+        };
+      
+      }());
+   </script>
+</body>
 </html>
