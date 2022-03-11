@@ -2,27 +2,27 @@
    -->
 <!DOCTYPE html>
 <head>
-   <title>Drawing Behaviors</title>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
-   <!-- bootbox.js at 4.4.0 -->
-   <script src="https://rawgit.com/makeusabrew/bootbox/f3a04a57877cab071738de558581fbc91812dce9/bootbox.js"></script>
-</head>
-<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+	<title>Drawing Behaviors</title>
+	<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+				<!-- bootbox.js at 4.4.0 -->
+				<script src="https://rawgit.com/makeusabrew/bootbox/f3a04a57877cab071738de558581fbc91812dce9/bootbox.js"></script>
+			</head>
+			<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
    please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
-<div class="container mt-5">
-   <h2>Collection for a Drawing Dataset</h2>
-   <div class="row">
-      <div class ="col">
-         <div class="mt-4 p-5 bg-dark text-white rounded">
-            <div class = "row">
-               <div class = "col">
-                  <p>
-                     <strong>Instructions: </strong>
-                    <!-- 
+			<div class="container mt-5">
+				<h2>Collection for a Drawing Dataset</h2>
+				<div class="row">
+					<div class ="col">
+						<div class="mt-4 p-5 bg-dark text-white rounded">
+							<div class = "row">
+								<div class = "col">
+									<p>
+										<strong>Instructions: </strong>
+										<!-- 
                      This interface will be used for making trajectories with the four
                      characteristics  seen below.  After you are finished drawing, 
                      you will see video playback below the canvas. The first 
@@ -40,78 +40,71 @@
                     The instructions consist of four characteristic components: 
 
                    
-                    <br> 
+                    
+										<br> 
 
                     1. Shape: The object/shape to be drawn. 
                     </br>
-                    
-                    <br> 
+										<br> 
 
                     2. Trajectory: The initial trajectory to draw before 
                     starting with shape drawing
                     </br>
-                    
-                    <br> 
+										<br> 
 
                     3. Location: Location where the shape must start
                     </br>
-                    
-                    <br> 
+										<br> 
 
                     4. Speed: Speed of entire drawing (Trajectory + Shape) 
                     </br>
-                    
-                   
-                    
-                   
-                    
-                  </p>
-                     <div>
+									</p>
+									<div>
                         For further instructions, please see following example video:
                      </div>
-                  <div class = "row">
-                     <div class = "row">
-                        <div class = "col">
-                           <iframe width="560" height="315" src="https://www.youtube.com/embed/MzIbj4Xwo5E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
-                        </div>
-                     </div>
-                     <p id=behavior_words> </p>
-
-
-                  </div>
-                  <div class="container mt-5">
-                  </div>
-               </div>
-               <div class = "col">
-                  <div class = "col">
-                     <div id="sketch" class="row">
-                        <div class="col">
-                           <canvas id="paint" style="background-color: white"width = 480 height = 360 class="border border-dark rounded">
+									<div class = "row">
+										<div class = "row">
+											<div class = "col">
+												<iframe width="560" height="315" src="https://www.youtube.com/embed/MzIbj4Xwo5E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+											</div>
+										</div>
+										<p id=behavior_words></p>
+									</div>
+									<div class="container mt-5"></div>
+								</div>
+								<div class = "col">
+									<div class = "col">
+										<div id="sketch" class="row">
+											<div class="col">
+												<canvas id="paint" style="background-color: white"width = 480 height = 360 class="border border-dark rounded">
                            We're sorry, the browser you are using does not support 
-                           <canvas>
+                           
+													<canvas>
                               . Please upgrade your browser. 
-                              <!--Anything inside of the canvas tag will only display if the browser does not support the <canvas> tag.-->
-                           </canvas>
-                        </div>
-                        <div class="col">
-                           <video id="video1" class="border border-dark rounded" width = 480 height = 360 autoplay controls></video>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div style="text-align: center">
-      <input id="smit" class="btn btn-primary w-100" type="submit" value="Submit">
-   </div>
-</div>
-<body>
-   <!-- You must include crowd-form so that your task submits answers to MTurk -->
-   <script>
+                              
+														<!--Anything inside of the canvas tag will only display if the browser does not support the <canvas> tag.--></canvas>
+												</div>
+												<div class="col">
+													<video id="video1" class="border border-dark rounded" width = 480 height = 360 autoplay controls></video>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div style="text-align: center">
+						<input id="smit" class="btn btn-primary w-100" type="submit" value="Submit">
+						</div>
+					</div>
+					<body>
+						<!-- You must include crowd-form so that your task submits answers to MTurk -->
+						<script>
       // This part of the code is used for generating the random words to describe
       // the task being completed.
+
+     
       let words1 = "square circle spiral triangle zero one two three four five six seven eight nine";
       var words1Array = words1.split(' ');
       console.log(words1Array)
@@ -127,9 +120,29 @@
       var selected_word2  = words2Array[Math.floor(Math.random()*words2Array.length)].replaceAll('_',' ');
       var selected_word3  = words3Array[Math.floor(Math.random()*words3Array.length)].replaceAll('_',' ');
       var selected_word4  = words4Array[Math.floor(Math.random()*words4Array.length)];
-      var task = "<table style='width:100%'> <tr> <th>Shape:</th>  <th>" +
-selected_word1 + "</th> </tr><br>"  + "<tr> <th>Trajectory:</th> <th>" +
-selected_word2 + "</th> </tr><br>"  + "<tr> <th>Location: </th> <th>"+ selected_word3 + "</th> </tr>"  + "<tr> <th>Speed: </th> <th>"+ selected_word4 + "</th> </tr>  </table>";
+      var task = "
+							<table style='width:100%'>
+								<tr>
+									<th>Shape:</th>
+									<th>" +
+selected_word1 + "</th>
+								</tr>
+								<br>"  + "
+									<tr>
+										<th>Trajectory:</th>
+										<th>" +
+selected_word2 + "</th>
+									</tr>
+									<br>"  + "
+										<tr>
+											<th>Location: </th>
+											<th>"+ selected_word3 + "</th>
+										</tr>"  + "
+										<tr>
+											<th>Speed: </th>
+											<th>"+ selected_word4 + "</th>
+										</tr>
+									</table>";
       console.log(task)
       document.getElementById("behavior_words").innerHTML = task;
       
@@ -207,27 +220,7 @@ selected_word2 + "</th> </tr><br>"  + "<tr> <th>Location: </th> <th>"+ selected_
       
       var canvas = document.getElementById("paint");
       var context = canvas.getContext('2d');
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      chunks = [];
-      
-      }
-      function sendJSON(){
-                 var blob = new Blob(chunks, { 'type' : 'video/webm' });
-                 console.log(blob)
-                console.log(chunks);
-                var formData = new FormData();
-                formData.append('blob', blob);
-                formData.append('Shape', selected_word1);
-                formData.append('Movement',selected_word2);
-                formData.append('Location', selected_word3);
-                formData.append('Speed', selected_word3);
-                console.log(formData)
-                chunks = [];
-                $.ajax({
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    url: "http://www.behaviors.ddns.net:8080/json_handler.php",
-                    data: formData,
+      context.clearRect(0, 0, canvas.width, canvas.height)
                     processData: false,
                     contentType: false,
                     cache: false,
@@ -242,6 +235,94 @@ selected_word2 + "</th> </tr><br>"  + "<tr> <th>Location: </th> <th>"+ selected_
       
         
       }
+      function GetWorkerId() {
+        var workerId = turkGetParam( 'workerId', 'NONE' );
+        return workerId;
+      }	
+
+function IsTurkPreview() {
+	return GetWorkerId() == "NONE";
+}	
+
+function IsOnTurk() {
+  try {
+    return ((window.location.host.indexOf('mturk')!=-1) || document.forms["mturk_form"] ||
+      (top != self && window.parent.location.host.indexOf("mturk") != -1));
+  } catch(err) {
+    // insecure content trying to access https://turk probably, so say yes:
+    return true;
+  }
+}
+
+function GetAssignmentId() {
+	var assignmentId = turkGetParam( 'assignmentId', 'NONE' );
+	return assignmentId;
+}	
+     
+/**
+ * Gets a URL parameter from the query string
+ */
+function turkGetParam( name, defaultValue ) { 
+   var regexS = "[\?&]"+name+"=([^&#]*)"; 
+   var regex = new RegExp( regexS ); 
+   var tmpURL = window.location.href; 
+   var results = regex.exec( tmpURL ); 
+   if( results == null ) { 
+     return defaultValue; 
+   } else { 
+     return results[1];    
+   } 
+}
+
+/**
+ * URL decode a parameter
+ */
+function decode(strToDecode)
+{
+  var encoded = strToDecode;
+  return unescape(encoded.replace(/\+/g,  " "));
+}
+
+
+/**
+ * Returns the Mechanical Turk Site to post the HIT to (sandbox. prod)
+ */
+function turkGetSubmitToHost() {
+  return decode(turkGetParam("turkSubmitTo", "https://www.mturk.com"));
+}
+
+
+/**
+ * Sets the assignment ID in the form. Defaults to use mturk_form and submitButton
+ */ 
+function turkSetAssignmentID( form_name, button_name ) {
+
+  if (form_name == null) {
+    form_name = "mturk_form";
+  }
+
+  if (button_name == null) {
+    button_name = "submitButton";
+  }
+
+  assignmentID = turkGetParam('assignmentId', "");
+  document.getElementById('assignmentId').value = assignmentID;
+
+  if (assignmentID == "ASSIGNMENT_ID_NOT_AVAILABLE") { 
+    // If we're previewing, disable the button and give it a helpful message
+    btn = document.getElementById(button_name);
+    if (btn) {
+      btn.disabled = true; 
+      btn.value = "You must ACCEPT the HIT before you can submit the results.";
+    } 
+  }
+
+  form = document.getElementById(form_name); 
+  if (form) {
+     form.action = turkGetSubmitToHost() + "/mturk/externalSubmit"; 
+  }
+}
+
       (function() {
         var canvas = document.querySelector('#paint');
         var ctx = canvas.getContext('2d');
@@ -294,6 +375,9 @@ selected_word2 + "</th> </tr><br>"  + "<tr> <th>Location: </th> <th>"+ selected_
         };
       
       }());
-   </script>
-</body>
+   
+    </script>
+  </body>
 </html>
+
+
