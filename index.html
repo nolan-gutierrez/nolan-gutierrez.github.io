@@ -198,6 +198,7 @@
       
       var canvas = document.getElementById("paint");
       var context = canvas.getContext('2d');
+      context.clearRect(0, 0, canvas.width, canvas.height)
 chunks = [];
       
       }
@@ -241,22 +242,6 @@ formData.append('blob', blob);
                         // whatever you want to do 
                     }
                 });
-          
-          
-      
-        
-      }
-      context.clearRect(0, 0, canvas.width, canvas.height)
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    timeout: 600000,
-                    success: function(image)
-                    {
-                        // whatever you want to do 
-                    }
-                });
-          
           
       
         
