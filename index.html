@@ -120,29 +120,7 @@
       var selected_word2  = words2Array[Math.floor(Math.random()*words2Array.length)].replaceAll('_',' ');
       var selected_word3  = words3Array[Math.floor(Math.random()*words3Array.length)].replaceAll('_',' ');
       var selected_word4  = words4Array[Math.floor(Math.random()*words4Array.length)];
-      var task = "
-							<table style='width:100%'>
-								<tr>
-									<th>Shape:</th>
-									<th>" +
-selected_word1 + "</th>
-								</tr>
-								<br>"  + "
-									<tr>
-										<th>Trajectory:</th>
-										<th>" +
-selected_word2 + "</th>
-									</tr>
-									<br>"  + "
-										<tr>
-											<th>Location: </th>
-											<th>"+ selected_word3 + "</th>
-										</tr>"  + "
-										<tr>
-											<th>Speed: </th>
-											<th>"+ selected_word4 + "</th>
-										</tr>
-									</table>";
+      var task = " <table style='width:100%'> <tr> <th>Shape:</th> <th>" + selected_word1 + "</th> </tr> <br>"  + " <tr> <th>Trajectory:</th> <th>" + selected_word2 + "</th> </tr> <br>"  + " <tr> <th>Location: </th> <th>"+ selected_word3 + "</th> </tr>"  + " <tr> <th>Speed: </th> <th>"+ selected_word4 + "</th> </tr> </table>";
       console.log(task)
       document.getElementById("behavior_words").innerHTML = task;
       
