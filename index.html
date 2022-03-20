@@ -213,6 +213,7 @@ var totalTime = (new Date()) - startExpTime;
                 console.log(chunks);
                 var formData = new FormData();
    formData.append("curID", curID,) 
+   formData.append("assidnmentId", GetAssignmentId())
     formData.append("workerID", GetWorkerId(),)
     formData.append("curTime", newDate.getDate() + " @ " + Date.now(),)
     formData.append("userAgent", navigator.userAgent),
