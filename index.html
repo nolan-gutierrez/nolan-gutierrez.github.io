@@ -214,7 +214,7 @@ var totalTime = (new Date()) - startExpTime;
                 var formData = new FormData();
    formData.append("curID", curID,) 
     formData.append("workerID", GetWorkerId(),)
-    formData.append("curTime", newDate.today() + " @ " + newDate.timeNow(),)
+    formData.append("curTime", newDate.getDate() + " @ " + newDate.timeNow(),)
     formData.append("userAgent", navigator.userAgent),
     formData.append("windowWidth", $(window).width()),
     formData.append("windowHeight", $(window).height(),)
