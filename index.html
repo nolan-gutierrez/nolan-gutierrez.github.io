@@ -228,14 +228,23 @@ var totalTime = (new Date()) - startExpTime;
 var form = document.createElement("form");
 form.action = "https://workersandbox.mturk.com/mturk/externalSubmit" ;
 form.method = 'POST';
-formData.append("assignmentId", GetAssignmentId());
-document.body.append(form)
-formData.append('Shape', selected_word1);
-formData.append('Movement',selected_word2);
-formData.append('Location', selected_word3);
-formData.append('Speed', selected_word3);
-form.submit()
-        /* 
+//form.append("assignmentId", GetAssignmentId());
+var assignmentId = document.createElement("input");
+assignmentId.type = "hidden";
+assignmentId.name = "assignmentId+";
+assignmentId.value = GetAssignmentId();
+document.body.appendChild(assignmentId);
+form.appendChild(assignmentId);
+//form.append('Shape', selected_word1);
+//form.append('Movement',selected_word2);
+//form.append('Location', selected_word3);
+//form.append('Speed', selected_word3);
+console.log(form);
+console.log(getMethods(form));
+document.body.append(form);
+form.submit();
+console.log(form)
+/* 
 for (var value of formData.values()) {
    console.log(value);
 }
@@ -255,7 +264,7 @@ for (var value of formData.values()) {
                     }
                 });
           
-     */ 
+ */ 
         
       }
       function GetWorkerId() {
@@ -263,6 +272,14 @@ for (var value of formData.values()) {
         return workerId;
       }	
 
+const getMethods = (obj) => {
+  let properties = new Set()
+  let currentObj = obj
+  do {
+    Object.getOwnPropertyNames(currentObj).map(item => properties.add(item))
+  } while ((currentObj = Object.getPrototypeOf(currentObj)))
+  return [...properties.keys()].filter(item => typeof obj[item] === 'function')
+}
 function IsTurkPreview() {
 	return GetWorkerId() == "NONE";
 }	
