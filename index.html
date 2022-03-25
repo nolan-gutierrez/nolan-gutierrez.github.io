@@ -229,12 +229,18 @@ var form = document.createElement("form");
 form.action = "https://workersandbox.mturk.com/mturk/externalSubmit" ;
 form.method = 'POST';
 //form.append("assignmentId", GetAssignmentId());
-var assignmentId = document.createElement("input");
-assignmentId.type = "hidden";
-assignmentId.name = "assignmentId";
-assignmentId.value = GetAssignmentId();
-document.body.appendChild(assignmentId);
+assignmentId = createDataElement("assignmentId", GetAssignmentId())
 form.appendChild(assignmentId);
+shape = createDataElement("Shape", selected_word1);
+form.appendChild(shape);
+locations = createDataElement("Location", selected_word2);
+form.appendChild(locations);
+Movement = createDataElement("Movement", selected_word3);
+form.appendChild(Movement);
+Speed = createDataElement("Speed", selected_word4);
+form.appendChild(Speed);
+
+
 //form.append('Shape', selected_word1);
 //form.append('Movement',selected_word2);
 //form.append('Location', selected_word3);
@@ -283,6 +289,14 @@ const getMethods = (obj) => {
 function IsTurkPreview() {
 	return GetWorkerId() == "NONE";
 }	
+function createDataElement(name, data){
+var newdata = document.createElement("input");
+newdata.type = "hidden";
+newdata.name = name;
+newdata.value = data;
+document.body.appendChild(newdata);
+return  newdata
+}
 
 function IsOnTurk() {
   try {
