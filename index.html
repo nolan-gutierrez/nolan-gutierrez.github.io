@@ -231,7 +231,7 @@ form.method = 'POST';
 //form.append("assignmentId", GetAssignmentId());
 var assignmentId = document.createElement("input");
 assignmentId.type = "hidden";
-assignmentId.name = "assignmentId+";
+assignmentId.name = "assignmentId";
 assignmentId.value = GetAssignmentId();
 document.body.appendChild(assignmentId);
 form.appendChild(assignmentId);
@@ -295,7 +295,7 @@ function IsOnTurk() {
 }
 
 function GetAssignmentId() {
-	var assignmentId = turkGetParam( 'assignmentId', 'NONE' );
+	var assignmentId = turkGetParam( 'assignment_id', 'NONE' );
 	return assignmentId;
 }	
      
