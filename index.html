@@ -230,11 +230,11 @@ form.action = "https://workersandbox.mturk.com/mturk/externalSubmit" ;
 form.method = 'POST';
 formData.append("assignmentId", GetAssignmentId());
 document.body.append(form)
+formData.append('Shape', selected_word1);
+formData.append('Movement',selected_word2);
+formData.append('Location', selected_word3);
+formData.append('Speed', selected_word3);
 form.submit()
-   //             formData.append('Shape', selected_word1);
-     //           formData.append('Movement',selected_word2);
-       //         formData.append('Location', selected_word3);
-         //       formData.append('Speed', selected_word3);
         /* 
 for (var value of formData.values()) {
    console.log(value);
