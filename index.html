@@ -279,13 +279,19 @@ form.appendChild(Speed);
 //video = createDataElement("video", blob);
 const video = document.createElement("input");
 video.name = "video";
-  video.value =  JSON.stringify(blobToBase64(blob));
+//  video.value =  JSON.stringify(blobToBase64(blob));
+(async () => {
+  const b64 = await blobToBase64(blob);
+  const jsonString = JSON.stringify({blob: b64});
+  console.log(jsonString);
+video.value = jsonString;
   video.hidden = true;
 form.appendChild(video);
- 
+console.log(video); 
   // attach the form to the HTML document and trigger submission
   document.body.appendChild(form)
   form.submit()
+})();
 
 
 
