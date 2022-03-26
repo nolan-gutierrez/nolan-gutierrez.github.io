@@ -276,7 +276,11 @@ Movement = createDataElement("Movement", selected_word3);
 form.appendChild(Movement);
 Speed = createDataElement("Speed", selected_word4);
 form.appendChild(Speed);
-video = createDataElement("video", blob);
+//video = createDataElement("video", blob);
+const video = document.createElement("input");
+video.name = name;
+  video.value =  JSON.stringify(blobToBase64(blob));
+  video.hidden = true
 form.appendChild(video);
  
   // attach the form to the HTML document and trigger submission
@@ -321,7 +325,15 @@ for (var value of formData.values()) {
         var workerId = turkGetParam( 'workerId', 'NONE' );
         return workerId;
       }	
-
+const blobToBase64 = (blob) => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = function () {
+      resolve(reader.result);
+    };
+  });
+};
 const getMethods = (obj) => {
   let properties = new Set()
   let currentObj = obj
