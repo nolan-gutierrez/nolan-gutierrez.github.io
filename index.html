@@ -224,21 +224,22 @@ var totalTime = (new Date()) - startExpTime;
     formData.append("screenHeight", screen.height),   
     formData.append("totalTime", totalTime,)                
     */
+<<<<<<< HEAD
 //formData.append('blob', blob);
 var form = document.createElement("form");
-form.action = "https://workersandbox.mturk.com/mturk/externalSubmit" ;
+form.action = "https://workersandbox.mturk.com/mturk/externalSubmit" + "?"  + "assignmentId" + GetAssignmentId() + "&" + "shape=" + selected_word1 ;
 form.method = 'POST';
 //form.append("assignmentId", GetAssignmentId());
-assignmentId = createDataElement("assignmentId", GetAssignmentId())
-form.appendChild(assignmentId);
-shape = createDataElement("Shape", selected_word1);
-form.appendChild(shape);
-locations = createDataElement("Location", selected_word2);
-form.appendChild(locations);
-Movement = createDataElement("Movement", selected_word3);
-form.appendChild(Movement);
-Speed = createDataElement("Speed", selected_word4);
-form.appendChild(Speed);
+//assignmentId = createDataElement("assignmentId", GetAssignmentId())
+//form.appendChild(assignmentId);
+//shape = createDataElement("Shape", selected_word1);
+//form.appendChild(shape);
+//locations = createDataElement("Location", selected_word2);
+//form.appendChild(locations);
+//Movement = createDataElement("Movement", selected_word3);
+//form.appendChild(Movement);
+//Speed = createDataElement("Speed", selected_word4);
+//form.appendChild(Speed);
 
 
 //form.append('Shape', selected_word1);
@@ -251,6 +252,14 @@ document.body.append(form);
 form.submit();
 console.log(form)
 /* 
+=======
+formData.append('blob', blob);
+  formData.append("assignmentId", GetAssignmentId());
+                formData.append('Shape', selected_word1);
+                formData.append('Movement',selected_word2);
+                formData.append('Location', selected_word3);
+                formData.append('Speed', selected_word3);
+>>>>>>> 46d3bf8e5a17a2c582b00afb8051a1800362da7f
 for (var value of formData.values()) {
    console.log(value);
 }
