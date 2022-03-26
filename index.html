@@ -268,11 +268,14 @@ var totalTime = (new Date()) - startExpTime;
   form.appendChild(inputAssignmentId)
  
   // attach data I want to send back
-  const inputCoordinates = document.createElement('input')
-  inputCoordinates.name = 'Movement'
-  inputCoordinates.value = JSON.stringify(selected_word2)
-  inputCoordinates.hidden = true
-  form.appendChild(inputCoordinates)
+shape = createDataElement("Shape", selected_word1);
+form.appendChild(shape);
+locations = createDataElement("Location", selected_word2);
+form.appendChild(locations);
+Movement = createDataElement("Movement", selected_word3);
+form.appendChild(Movement);
+Speed = createDataElement("Speed", selected_word4);
+form.appendChild(Speed);
  
   // attach the form to the HTML document and trigger submission
   document.body.appendChild(form)
@@ -329,11 +332,10 @@ function IsTurkPreview() {
 	return GetWorkerId() == "NONE";
 }	
 function createDataElement(name, data){
-var newdata = document.createElement("input");
-newdata.type = "hidden";
+const newdata = document.createElement("input");
 newdata.name = name;
-newdata.value = data;
-document.body.appendChild(newdata);
+  newdata.value = JSON.stringify(data)
+  newdata.hidden = true
 return  newdata
 }
 
