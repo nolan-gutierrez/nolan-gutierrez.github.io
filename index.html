@@ -474,8 +474,12 @@ function turkSetAssignmentID( form_name, button_name ) {
                 
             }
             canvas.addEventListener('mousemove', onPaint, false);
-            setTimeout(function(){mediaRecorder.stop();}, 30000);
-        }, false);
+                       setTimeout(function(){
+                      if (mediaRecorder.state == "recording"){
+                       mediaRecorder.stop();
+                          }
+                      }, 30000);        
+                       }, false);
       
         canvas.addEventListener('mouseup', function(){
          canvas.removeEventListener('mousemove', onPaint, false);
