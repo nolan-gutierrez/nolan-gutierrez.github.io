@@ -2,109 +2,107 @@
    -->
 <!DOCTYPE html>
 <head>
-	<title>Drawing Behaviors</title>
-	<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
-				<!-- bootbox.js at 4.4.0 -->
-				<script src="https://rawgit.com/makeusabrew/bootbox/f3a04a57877cab071738de558581fbc91812dce9/bootbox.js"></script>
-			</head>
-			<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+   <title>Drawing Behaviors</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+   <!-- bootbox.js at 4.4.0 -->
+   <script src="https://rawgit.com/makeusabrew/bootbox/f3a04a57877cab071738de558581fbc91812dce9/bootbox.js"></script>
+</head>
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
    please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
-			<div class="container mt-5">
-				<h2>Collection for a Drawing Dataset</h2>
-				<div class="row">
-					<div class ="col">
-						<div class="mt-4 p-5 bg-dark text-white rounded">
-							<div class = "row">
-								<div class = "col">
-									<p>
-										<strong>Instructions: </strong>
-										<!-- 
-                     This interface will be used for making trajectories with the four
-                     characteristics  seen below.  After you are finished drawing, 
-                     you will see video playback below the canvas. The first 
-                     characteristic indicates what type of object should be drawn in the position 
-                     indicated by the third characteristic.  The second characteristic indicates 
-                     the type of trajectory the artist must create in accordance with
-                     the other characteristics. Location marks both the end of the trajectory 
-                     and where the shape must be drawn. Finally, the fourth characteristic is the 
-                     speed at which the drawing should be made.  Before confirming your submission, 
-                     you should make sure that the video playback of your drawing contains all of 
-                     the following characteristics: 
-                    --> 
-                    Please input your drawing in the canvas as per instructions. 
-
-                    The instructions consist of four characteristic components: 
-
-                   
-                    
-										<br> 
-
-                    1. Shape: The object/shape to be drawn. 
-                    </br>
-										<br> 
-
-                    2. Trajectory: The initial trajectory to draw before 
-                    starting with shape drawing
-                    </br>
-										<br> 
-
-                    3. Location: Location where the shape must start
-                    </br>
-										<br> 
-
-                    4. Speed: Speed of entire drawing (Trajectory + Shape) 
-                    </br>
-									</p>
-									<div>
-                        For further instructions, please see following example video:
+<div class="container mt-5">
+   <h2>Collection for a Drawing Dataset</h2>
+   <div class="row">
+      <div class ="col">
+         <div class="mt-4 p-5 bg-dark text-white rounded">
+            <div class = "row">
+               <div class = "col">
+                  <p>
+                     <strong>Instructions: </strong>
+                     <!-- 
+                        This interface will be used for making trajectories with the four
+                        characteristics  seen below.  After you are finished drawing, 
+                        you will see video playback below the canvas. The first 
+                        characteristic indicates what type of object should be drawn in the position 
+                        indicated by the third characteristic.  The second characteristic indicates 
+                        the type of trajectory the artist must create in accordance with
+                        the other characteristics. Location marks both the end of the trajectory 
+                        and where the shape must be drawn. Finally, the fourth characteristic is the 
+                        speed at which the drawing should be made.  Before confirming your submission, 
+                        you should make sure that the video playback of your drawing contains all of 
+                        the following characteristics: 
+                        --> 
+                     Please input your drawing in the canvas as per instructions. 
+                     Start by drawing the given trajectory from any starting
+                     point. Make sure to end the trajectory in "Location" and to 
+                     leave enough room to draw the symbol given by "Shape".  Our
+                     learning agent will need to learn how to adjust its 
+                     behavior according to the context you create with your 
+                     trajectory. Complete these actions at the pace given by "Speed". 
+                     The instructions consist of four characteristic components: 
+                     <br>
+                     <br> 
+                     1. Shape: The object/shape to be drawn
+                     </br>
+                     <br> 
+                     2. Trajectory: The initial trajectory to draw before 
+                     starting with shape drawing
+                     </br>
+                     <br> 
+                     3. Location: Location where the shape must start
+                     </br>
+                     <br> 
+                     4. Speed: Speed of entire drawing (Trajectory + Shape) 
+                     </br>
+                  </p>
+                  <div>
+                     For further instructions, please see following example video:
+                  </div>
+                  <div class = "row">
+                     <div class = "row">
+                        <div class = "col">
+                           <iframe width="560" height="315" src="https://www.youtube.com/embed/MzIbj4Xwo5E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
                      </div>
-									<div class = "row">
-										<div class = "row">
-											<div class = "col">
-												<iframe width="560" height="315" src="https://www.youtube.com/embed/MzIbj4Xwo5E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-											</div>
-										</div>
-										<p id=behavior_words></p>
-									</div>
-									<div class="container mt-5"></div>
-								</div>
-								<div class = "col">
-									<div class = "col">
-										<div id="sketch" class="row">
-											<div class="col">
-												<canvas id="paint" style="background-color: white"width = 480 height = 360 class="border border-dark rounded">
+                     <p id=behavior_words></p>
+                  </div>
+                  <div class="container mt-5"></div>
+               </div>
+               <div class = "col">
+                  <div class = "col">
+                     <div id="sketch" class="row">
+                        <div class="col">
+                           <canvas id="paint" style="background-color: white"width = 480 height = 360 class="border border-dark rounded">
                            We're sorry, the browser you are using does not support 
-                           
-													<canvas>
+                           <canvas>
                               . Please upgrade your browser. 
-                              
-														<!--Anything inside of the canvas tag will only display if the browser does not support the <canvas> tag.--></canvas>
-												</div>
-												<div class="col">
-													<video id="video1" class="border border-dark rounded" width = 480 height = 360 autoplay controls></video>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div style="text-align: center">
-						<input id="smit" class="btn btn-primary w-100" type="submit" value="Submit">
-						</div>
-					</div>
-					<body>
-						<!-- You must include crowd-form so that your task submits answers to MTurk -->
-						<script>
+                              <!--Anything inside of the canvas tag will only display if the browser does not support the <canvas> tag.-->
+                           </canvas>
+                        </div>
+                        <div class="col">
+                           <video id="video1" class="border border-dark rounded" width = 480 height = 360 autoplay controls></video>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div style="text-align: center">
+      <input id="smit" class="btn btn-primary w-100" type="submit" value="Submit">
+   </div>
+</div>
+<body>
+   <!-- You must include crowd-form so that your task submits answers to MTurk -->
+   <script>
       // This part of the code is used for generating the random words to describe
       // the task being completed.
       var startExpTime = null;
-     
+      
       let words1 = "square circle spiral triangle zero one two three four five six seven eight nine";
       var words1Array = words1.split(' ');
       console.log(words1Array)
@@ -199,115 +197,115 @@
       var canvas = document.getElementById("paint");
       var context = canvas.getContext('2d');
       context.clearRect(0, 0, canvas.width, canvas.height)
-chunks = [];
+      chunks = [];
       
       }
       function sendJSON(){
-var totalTime = (new Date()) - startExpTime;
-  var newDate = new Date();
-  $('#assignmentId').val(GetAssignmentId());
-  var curID = (IsOnTurk())? GetAssignmentId() : prompt("Doesn't look like you " + 
-  "are on Turk, so you're probably testing. Enter an ID to save your data with:", "id");
+      var totalTime = (new Date()) - startExpTime;
+      var newDate = new Date();
+      $('#assignmentId').val(GetAssignmentId());
+      var curID = (IsOnTurk())? GetAssignmentId() : prompt("Doesn't look like you " + 
+      "are on Turk, so you're probably testing. Enter an ID to save your data with:", "id");
                  var blob = new Blob(chunks, { 'type' : 'video/webm' });
                  console.log(blob)
                 console.log(chunks);
                 var formData = new FormData();
-   //formData.append("curID", curID,) 
-   console.log(GetAssignmentId());
-  /* 
-    formData.append("workerID", GetWorkerId(),)
-    formData.append("curTime", newDate.getDate() + " @ " + Date.now(),)
-    formData.append("userAgent", navigator.userAgent),
-    formData.append("windowWidth", $(window).width()),
-    formData.append("windowHeight", $(window).height(),)
-    formData.append("screenWidth", screen.width),
-    formData.append("screenHeight", screen.height),   
-    formData.append("totalTime", totalTime,)                
-    */
-//formData.append('blob', blob);
-//var form = document.createElement("form");
-//form.action = "https://workersandbox.mturk.com/mturk/externalSubmit" + "?"  + "assignmentId=" + GetAssignmentId() + "&" + "shape=" + selected_word1 ;
-//form.method = 'POST';
-//form.append("assignmentId", GetAssignmentId());
-//assignmentId = createDataElement("assignmentId", GetAssignmentId())
-//form.appendChild(assignmentId);
-//shape = createDataElement("Shape", selected_word1);
-//form.appendChild(shape);
-//locations = createDataElement("Location", selected_word2);
-//form.appendChild(locations);
-//Movement = createDataElement("Movement", selected_word3);
-//form.appendChild(Movement);
-//Speed = createDataElement("Speed", selected_word4);
-//form.appendChild(Speed);
-
-
-//form.append('Shape', selected_word1);
-//form.append('Movement',selected_word2);
-//form.append('Location', selected_word3);
-//form.append('Speed', selected_word3);
-//console.log(form);
-//console.log(getMethods(form));
-//document.body.append(form);
-//form.submit();
-//console.log(form)
-
-
-  const urlParams = new URLSearchParams(window.location.search)
- 
-  // create the form element and point it to the correct endpoint
-  const form = document.createElement('form')
-  //form.action = (new URL('mturk/externalSubmit', urlParams.get('turkSubmitTo'))).href
-  form.action = "https://workersandbox.mturk.com/mturk/externalSubmit";
-  form.method = 'post'
- 
-  // attach the assignmentId
-  const inputAssignmentId = document.createElement('input')
-  inputAssignmentId.name = 'assignmentId'
-  inputAssignmentId.value = urlParams.get('assignmentId')
-  inputAssignmentId.hidden = true
-  form.appendChild(inputAssignmentId)
- 
-  // attach data I want to send back
-shape = createDataElement("Shape", selected_word1);
-form.appendChild(shape);
-locations = createDataElement("Location", selected_word2);
-form.appendChild(locations);
-Movement = createDataElement("Movement", selected_word3);
-form.appendChild(Movement);
-Speed = createDataElement("Speed", selected_word4);
-form.appendChild(Speed);
-//video = createDataElement("video", blob);
-const video = document.createElement("input");
-video.name = "video";
-//  video.value =  JSON.stringify(blobToBase64(blob));
-(async () => {
-  const b64 = await blobToBase64(blob);
-  const jsonString = JSON.stringify({blob: b64});
-  console.log(jsonString);
-video.value = jsonString;
-  video.hidden = true;
-form.appendChild(video);
-console.log(video); 
-  // attach the form to the HTML document and trigger submission
-  document.body.appendChild(form)
-  form.submit()
-})();
-
-
-
-
-/* 
-=======
-formData.append('blob', blob);
-  formData.append("assignmentId", GetAssignmentId());
+      //formData.append("curID", curID,) 
+      console.log(GetAssignmentId());
+      /* 
+      formData.append("workerID", GetWorkerId(),)
+      formData.append("curTime", newDate.getDate() + " @ " + Date.now(),)
+      formData.append("userAgent", navigator.userAgent),
+      formData.append("windowWidth", $(window).width()),
+      formData.append("windowHeight", $(window).height(),)
+      formData.append("screenWidth", screen.width),
+      formData.append("screenHeight", screen.height),   
+      formData.append("totalTime", totalTime,)                
+      */
+      //formData.append('blob', blob);
+      //var form = document.createElement("form");
+      //form.action = "https://workersandbox.mturk.com/mturk/externalSubmit" + "?"  + "assignmentId=" + GetAssignmentId() + "&" + "shape=" + selected_word1 ;
+      //form.method = 'POST';
+      //form.append("assignmentId", GetAssignmentId());
+      //assignmentId = createDataElement("assignmentId", GetAssignmentId())
+      //form.appendChild(assignmentId);
+      //shape = createDataElement("Shape", selected_word1);
+      //form.appendChild(shape);
+      //locations = createDataElement("Location", selected_word2);
+      //form.appendChild(locations);
+      //Movement = createDataElement("Movement", selected_word3);
+      //form.appendChild(Movement);
+      //Speed = createDataElement("Speed", selected_word4);
+      //form.appendChild(Speed);
+      
+      
+      //form.append('Shape', selected_word1);
+      //form.append('Movement',selected_word2);
+      //form.append('Location', selected_word3);
+      //form.append('Speed', selected_word3);
+      //console.log(form);
+      //console.log(getMethods(form));
+      //document.body.append(form);
+      //form.submit();
+      //console.log(form)
+      
+      
+        const urlParams = new URLSearchParams(window.location.search)
+       
+        // create the form element and point it to the correct endpoint
+        const form = document.createElement('form')
+        //form.action = (new URL('mturk/externalSubmit', urlParams.get('turkSubmitTo'))).href
+      form.action = "https://workersandbox.mturk.com/mturk/externalSubmit";
+        form.method = 'post'
+       
+        // attach the assignmentId
+        const inputAssignmentId = document.createElement('input')
+        inputAssignmentId.name = 'assignmentId'
+        inputAssignmentId.value = urlParams.get('assignmentId')
+        inputAssignmentId.hidden = true
+        form.appendChild(inputAssignmentId)
+       
+        // attach data I want to send back
+      shape = createDataElement("Shape", selected_word1);
+      form.appendChild(shape);
+      locations = createDataElement("Location", selected_word2);
+      form.appendChild(locations);
+      Movement = createDataElement("Movement", selected_word3);
+      form.appendChild(Movement);
+      Speed = createDataElement("Speed", selected_word4);
+      form.appendChild(Speed);
+      //video = createDataElement("video", blob);
+      const video = document.createElement("input");
+      video.name = "video";
+      //  video.value =  JSON.stringify(blobToBase64(blob));
+      (async () => {
+      const b64 = await blobToBase64(blob);
+      const jsonString = JSON.stringify({blob: b64});
+      console.log(jsonString);
+      video.value = jsonString;
+        video.hidden = true;
+      form.appendChild(video);
+      console.log(video); 
+        // attach the form to the HTML document and trigger submission
+        document.body.appendChild(form)
+        form.submit()
+      })();
+      
+      
+      
+      
+      /* 
+      =======
+      formData.append('blob', blob);
+      formData.append("assignmentId", GetAssignmentId());
                 formData.append('Shape', selected_word1);
                 formData.append('Movement',selected_word2);
                 formData.append('Location', selected_word3);
                 formData.append('Speed', selected_word3);
->>>>>>> 46d3bf8e5a17a2c582b00afb8051a1800362da7f
-for (var value of formData.values()) {
-   console.log(value);
-}
+      >>>>>>> 46d3bf8e5a17a2c582b00afb8051a1800362da7f
+      for (var value of formData.values()) {
+      console.log(value);
+      }
                 chunks = [];
                 $.ajax({
                     type: "POST",
@@ -324,120 +322,120 @@ for (var value of formData.values()) {
                     }
                 });
           
- */ 
+      */ 
         
       }
       function GetWorkerId() {
         var workerId = turkGetParam( 'workerId', 'NONE' );
         return workerId;
       }	
-const blobToBase64 = (blob) => {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(blob);
-    reader.onloadend = function () {
+      const blobToBase64 = (blob) => {
+      return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = function () {
       resolve(reader.result);
-    };
-  });
-};
-const getMethods = (obj) => {
-  let properties = new Set()
-  let currentObj = obj
-  do {
-    Object.getOwnPropertyNames(currentObj).map(item => properties.add(item))
-  } while ((currentObj = Object.getPrototypeOf(currentObj)))
-  return [...properties.keys()].filter(item => typeof obj[item] === 'function')
-}
-function IsTurkPreview() {
-	return GetWorkerId() == "NONE";
-}	
-function createDataElement(name, data){
-const newdata = document.createElement("input");
-newdata.name = name;
-  newdata.value = JSON.stringify(data)
-  newdata.hidden = true
-return  newdata
-}
-
-function IsOnTurk() {
-  try {
-    return ((window.location.host.indexOf('mturk')!=-1) || document.forms["mturk_form"] ||
+      };
+      });
+      };
+      const getMethods = (obj) => {
+      let properties = new Set()
+      let currentObj = obj
+      do {
+      Object.getOwnPropertyNames(currentObj).map(item => properties.add(item))
+      } while ((currentObj = Object.getPrototypeOf(currentObj)))
+      return [...properties.keys()].filter(item => typeof obj[item] === 'function')
+      }
+      function IsTurkPreview() {
+      return GetWorkerId() == "NONE";
+      }	
+      function createDataElement(name, data){
+      const newdata = document.createElement("input");
+      newdata.name = name;
+        newdata.value = JSON.stringify(data)
+        newdata.hidden = true
+      return  newdata
+      }
+      
+      function IsOnTurk() {
+      try {
+      return ((window.location.host.indexOf('mturk')!=-1) || document.forms["mturk_form"] ||
       (top != self && window.parent.location.host.indexOf("mturk") != -1));
-  } catch(err) {
-    // insecure content trying to access https://turk probably, so say yes:
-    return true;
-  }
-}
-
-function GetAssignmentId() {
-	var assignmentId = turkGetParam( 'assignment_id', 'NONE' );
-	return assignmentId;
-}	
-     
-/**
- * Gets a URL parameter from the query string
- */
-function turkGetParam( name, defaultValue ) { 
-   var regexS = "[\?&]"+name+"=([^&#]*)"; 
-   var regex = new RegExp( regexS ); 
-   var tmpURL = window.location.href; 
-   var results = regex.exec( tmpURL ); 
-   if( results == null ) { 
-     return defaultValue; 
-   } else { 
-     return results[1];    
-   } 
-}
-
-/**
- * URL decode a parameter
- */
-function decode(strToDecode)
-{
-  var encoded = strToDecode;
-  return unescape(encoded.replace(/\+/g,  " "));
-}
-
-
-/**
- * Returns the Mechanical Turk Site to post the HIT to (sandbox. prod)
- */
-function turkGetSubmitToHost() {
-  return decode(turkGetParam("turkSubmitTo", "https://www.mturk.com"));
-}
-
-
-/**
- * Sets the assignment ID in the form. Defaults to use mturk_form and submitButton
- */ 
-function turkSetAssignmentID( form_name, button_name ) {
-
-  if (form_name == null) {
-    form_name = "mturk_form";
-  }
-
-  if (button_name == null) {
-    button_name = "submitButton";
-  }
-
-  assignmentID = turkGetParam('assignmentId', "");
-  document.getElementById('assignmentId').value = assignmentID;
-
-  if (assignmentID == "ASSIGNMENT_ID_NOT_AVAILABLE") { 
-    // If we're previewing, disable the button and give it a helpful message
-    btn = document.getElementById(button_name);
-    if (btn) {
+      } catch(err) {
+      // insecure content trying to access https://turk probably, so say yes:
+      return true;
+      }
+      }
+      
+      function GetAssignmentId() {
+      var assignmentId = turkGetParam( 'assignment_id', 'NONE' );
+      return assignmentId;
+      }	
+      
+      /**
+      * Gets a URL parameter from the query string
+      */
+      function turkGetParam( name, defaultValue ) { 
+      var regexS = "[\?&]"+name+"=([^&#]*)"; 
+      var regex = new RegExp( regexS ); 
+      var tmpURL = window.location.href; 
+      var results = regex.exec( tmpURL ); 
+      if( results == null ) { 
+      return defaultValue; 
+      } else { 
+      return results[1];    
+      } 
+      }
+      
+      /**
+      * URL decode a parameter
+      */
+      function decode(strToDecode)
+      {
+      var encoded = strToDecode;
+      return unescape(encoded.replace(/\+/g,  " "));
+      }
+      
+      
+      /**
+      * Returns the Mechanical Turk Site to post the HIT to (sandbox. prod)
+      */
+      function turkGetSubmitToHost() {
+      return decode(turkGetParam("turkSubmitTo", "https://www.mturk.com"));
+      }
+      
+      
+      /**
+      * Sets the assignment ID in the form. Defaults to use mturk_form and submitButton
+      */ 
+      function turkSetAssignmentID( form_name, button_name ) {
+      
+      if (form_name == null) {
+      form_name = "mturk_form";
+      }
+      
+      if (button_name == null) {
+      button_name = "submitButton";
+      }
+      
+      assignmentID = turkGetParam('assignmentId', "");
+      document.getElementById('assignmentId').value = assignmentID;
+      
+      if (assignmentID == "ASSIGNMENT_ID_NOT_AVAILABLE") { 
+      // If we're previewing, disable the button and give it a helpful message
+      btn = document.getElementById(button_name);
+      if (btn) {
       btn.disabled = true; 
       btn.value = "You must ACCEPT the HIT before you can submit the results.";
-    } 
-  }
-
-  form = document.getElementById(form_name); 
-  if (form) {
-     form.action = turkGetSubmitToHost() + "/mturk/externalSubmit"; 
-  }
-}
-
+      } 
+      }
+      
+      form = document.getElementById(form_name); 
+      if (form) {
+      form.action = turkGetSubmitToHost() + "/mturk/externalSubmit"; 
+      }
+      }
+      
       (function() {
         var canvas = document.querySelector('#paint');
         var ctx = canvas.getContext('2d');
@@ -496,9 +494,7 @@ function turkSetAssignmentID( form_name, button_name ) {
         };
       
       }());
-   
-    </script>
-  </body>
+      
+   </script>
+</body>
 </html>
-
-
