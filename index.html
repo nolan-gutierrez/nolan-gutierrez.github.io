@@ -255,42 +255,7 @@
                 var formData = new FormData();
       //formData.append("curID", curID,) 
       console.log(GetAssignmentId());
-      /* 
-      formData.append("workerID", GetWorkerId(),)
-      formData.append("curTime", newDate.getDate() + " @ " + Date.now(),)
-      formData.append("userAgent", navigator.userAgent),
-      formData.append("windowWidth", $(window).width()),
-      formData.append("windowHeight", $(window).height(),)
-      formData.append("screenWidth", screen.width),
-      formData.append("screenHeight", screen.height),   
-      formData.append("totalTime", totalTime,)                
-      */
-      //formData.append('blob', blob);
-      //var form = document.createElement("form");
-      //form.action = "https://workersandbox.mturk.com/mturk/externalSubmit" + "?"  + "assignmentId=" + GetAssignmentId() + "&" + "shape=" + selected_word1 ;
-      //form.method = 'POST';
-      //form.append("assignmentId", GetAssignmentId());
-      //assignmentId = createDataElement("assignmentId", GetAssignmentId())
-      //form.appendChild(assignmentId);
-      //shape = createDataElement("Shape", selected_word1);
-      //form.appendChild(shape);
-      //locations = createDataElement("Location", selected_word2);
-      //form.appendChild(locations);
-      //Movement = createDataElement("Movement", selected_word3);
-      //form.appendChild(Movement);
-      //Speed = createDataElement("Speed", selected_word4);
-      //form.appendChild(Speed);
-      
-      
-      //form.append('Shape', selected_word1);
-      //form.append('Movement',selected_word2);
-      //form.append('Location', selected_word3);
-      //form.append('Speed', selected_word3);
-      //console.log(form);
-      //console.log(getMethods(form));
-      //document.body.append(form);
-      //form.submit();
-      //console.log(form)
+
       
       
         const urlParams = new URLSearchParams(window.location.search)
@@ -298,7 +263,8 @@
         // create the form element and point it to the correct endpoint
         const form = document.createElement('form')
         //form.action = (new URL('mturk/externalSubmit', urlParams.get('turkSubmitTo'))).href
-      form.action = "https://workersandbox.mturk.com/mturk/externalSubmit";
+//      form.action = "https://workersandbox.mturk.com/mturk/externalSubmit";
+      form.action = "https://www.mturk.com/mturk/externalSubmit";
         form.method = 'post'
        
         // attach the assignmentId
@@ -334,38 +300,7 @@
         form.submit()
       })();
       
-      
-      
-      
-      /* 
-      =======
-      formData.append('blob', blob);
-      formData.append("assignmentId", GetAssignmentId());
-                formData.append('Shape', selected_word1);
-                formData.append('Movement',selected_word2);
-                formData.append('Location', selected_word3);
-                formData.append('Speed', selected_word3);
-      >>>>>>> 46d3bf8e5a17a2c582b00afb8051a1800362da7f
-      for (var value of formData.values()) {
-      console.log(value);
-      }
-                chunks = [];
-                $.ajax({
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    url: "https://workersandbox.mturk.com/mturk/externalSubmit",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    timeout: 600000,
-                    success: function(image)
-                    {
-                        // whatever you want to do 
-                    }
-                });
-          
-      */ 
+
         
       }
       function GetWorkerId() {
@@ -543,3 +478,4 @@
    </script>
 </body>
 </html>
+
