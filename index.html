@@ -41,7 +41,11 @@
                      leave enough room to draw the symbol given by "Shape".  Our
                      learning agent will need to learn how to adjust its 
                      behavior according to the context you create with your 
-                     trajectory. Complete these actions at the pace given by "Speed". 
+                     trajectory. If you click no after pressing submit, you will
+                     be able to start over. Note that you can let go of the left 
+                     click without stopping the video. Complete these actions at 
+                     the pace given by "Speed". 
+                     
                      The instructions consist of four characteristic components: 
                      <br>
                      <br> 
@@ -95,6 +99,12 @@
    <div style="text-align: center">
       <input id="smit" class="btn btn-primary w-100" type="submit" value="Submit">
    </div>
+   <div style="text-align: center">
+      <input id="vvid" class="btn btn-primary w-100" type="submit" value="View Video">
+   </div>
+   <div style="text-align: center">
+      <input id="cboard" class="btn btn-primary w-100" type="submit" value="Clear Board">
+   </div>
 </div>
 <body>
    <!-- You must include crowd-form so that your task submits answers to MTurk -->
@@ -130,19 +140,29 @@
       console.log(canvas)
       var context = canvas.getContext("2d");
       var videoStream = canvas.captureStream(30); 
+      var chunks = [];
       var mediaRecorder = new MediaRecorder(videoStream);
       var video = document.getElementById("video1"); 
       console.log(video);
-      var chunks = [];
       mediaRecorder.ondataavailable = function(e) {
         chunks.push(e.data);
+        var blob = new Blob(chunks, { 'type' : 'video/mp4' });
+        console.log("chunks is " +  chunks  )
+        var videoURL = URL.createObjectURL(blob);
+        video.src = videoURL;
+        console.log(blob)
       };
-      mediaRecorder.onstop = function(e) {
+
+//      console.log(Object.getOwnProprtyNames(mediaRecorder));
+      mediaRecorder.onpause = function(e) {
+        mediaRecorder.requestData();
+      };
+       mediaRecorder.onstop = function(e) {
         var blob = new Blob(chunks, { 'type' : 'video/mp4' });
         var videoURL = URL.createObjectURL(blob);
         video.src = videoURL;
-      };
-      
+      };     
+
       function onPaint() {
             ctx.beginPath();
             ctx.moveTo(last_mouse.x, last_mouse.y);
@@ -174,7 +194,6 @@
       
       
        canvas.removeEventListener('mousemove', onPaint, false);
-       mediaRecorder.stop()
       
       
       }
@@ -188,8 +207,31 @@
         //ie doesn't have addEventListner
         smit.attachEvent('onsubmit', confirm_dialog );
       }
-      
-      
+      var vvid = document.getElementById("vvid");
+      console.log(vvid);
+      if(vvid.addEventListener){
+        console.log(vvid.addEventListener);
+        vvid.addEventListener("click", play_video ,false);
+      } 
+      else{
+        //ie doesn't have addEventListner
+        vvid.attachEvent('onsubmit', play_video );
+      }
+      var cboard = document.getElementById("cboard");
+      console.log(cboard);
+      if(cboard.addEventListener){
+        console.log(cboard.addEventListener);
+        cboard.addEventListener("click", clearboard ,false);
+      } 
+      else{
+        //ie doesn't have addEventListner
+        cboard.attachEvent('onsubmit', clearboard );
+      }
+      function play_video(){
+        var blob = new Blob(chunks, { 'type' : 'video/mp4' });
+        var videoURL = URL.createObjectURL(blob);
+        video.src = videoURL;
+      }
       
       // Clear the canvas
       function clearboard(){
@@ -198,6 +240,7 @@
       var context = canvas.getContext('2d');
       context.clearRect(0, 0, canvas.width, canvas.height)
       chunks = [];
+      mediaRecorder.stop();
       
       }
       function sendJSON(){
@@ -255,7 +298,7 @@
         // create the form element and point it to the correct endpoint
         const form = document.createElement('form')
         //form.action = (new URL('mturk/externalSubmit', urlParams.get('turkSubmitTo'))).href
-      form.action = "https://www.mturk.com/mturk/externalSubmit";
+      form.action = "https://workersandbox.mturk.com/mturk/externalSubmit";
         form.method = 'post'
        
         // attach the assignmentId
@@ -466,20 +509,22 @@
       
         canvas.addEventListener('mousedown', function(e) {
         
-            if (mediaRecorder.state != "recording"){
+            if (mediaRecorder.state == "inactive"){
                 mediaRecorder.start()
                 startExpTime = new Date();
                 
             }
+            else {mediaRecorder.resume()}
             canvas.addEventListener('mousemove', onPaint, false);
-                       setTimeout(function(){
-                      if (mediaRecorder.state == "recording"){
-                       mediaRecorder.stop();
-                          }
-                      }, 30000);        
-                       }, false);
+//                       setTimeout(function(){
+//                      if (mediaRecorder.state == "recording"){
+//                       mediaRecorder.stop();
+//                          }
+//                      }, 30000);        
+       }, false);
       
         canvas.addEventListener('mouseup', function(){
+        mediaRecorder.pause()
          canvas.removeEventListener('mousemove', onPaint, false);
       
       
