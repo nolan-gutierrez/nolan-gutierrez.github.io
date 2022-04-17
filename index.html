@@ -1,583 +1,79 @@
-<!-- You must include this JavaScript file 
-   -->
-<!DOCTYPE html>
-<head>
-   <title>Drawing Behaviors</title>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
-   <!-- bootbox.js at 4.4.0 -->
-   <script src="https://rawgit.com/makeusabrew/bootbox/f3a04a57877cab071738de558581fbc91812dce9/bootbox.js"></script>
-</head>
-<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
-   please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
-<div class="container mt-5">
-   <h2>Collection for a Drawing Dataset</h2>
-   <div class="row">
-      <div class ="col">
-         <div class="mt-2 p-2 bg-dark text-white rounded">
-            <div class = "row">
-               <div class = "col">
-                  <p>
-                     <strong>Instructions: </strong>
-                     <!-- 
-                        This interface will be used for making trajectories with the four
-                        characteristics  seen below.  After you are finished drawing, 
-                        you will see video playback below the canvas. The first 
-                        characteristic indicates what type of object should be drawn in the position 
-                        indicated by the third characteristic.  The second characteristic indicates 
-                        the type of trajectory the artist must create in accordance with
-                        the other characteristics. Location marks both the end of the trajectory 
-                        and where the shape must be drawn. Finally, the fourth characteristic is the 
-                        speed at which the drawing should be made.  Before confirming your submission, 
-                        you should make sure that the video playback of your drawing contains all of 
-                        the following characteristics: 
-                        --> 
-                     Please input your drawing in the canvas as per instructions. 
-                     First, at a <strong id="speed3"></strong> speed,  create a path by <strong id = "traj"> </strong> that
-ends in the <strong id = "loca"> </strong> of the canvas/drawing area while leaving enough room for a
-<strong id=shape></strong> in the <strong id = loca2></strong>. Second, in the <strong id="loca3"></strong>, draw
-the shape <strong id="shape2"> </strong>. Make sure to do this at a
-<strong id="speed"></strong> speed.
-                    Our learning agent will need to learn how to adjust its 
-                     behavior according to the context you create with your 
-                     trajectory. If you click no after pressing submit, you will
-                     be able to start over. Note that you can let go of the left 
-                     click without stopping the video. 
-                     
-                     The instructions consist of four characteristic components: 
-                     <br>
-                     <br> 
-                     1. Shape: The object/shape to be drawn. You need to draw a
-<strong id= "shape3" ></strong> at the <strong id= "loca4" ></strong>
+import csv
+import numpy as np
+import base64 
+from pdb import set_trace as trace
+import sys
+import imageio as iio
 
-                     </br>
-                     <br> 
-                     2. Trajectory: The initial trajectory/path to draw before 
-                     starting with shape drawing. Create a path by <strong id
-="traj2" ></strong>.
-                     </br>
-                     <br> 
-                     3. Location: Location where the trajectory (i.e., the path)
-must end and the shape must be drawn. End your trajectory in the <strong id=
-"loca5"></strong>.
-                     </br>
-                     <br> 
-                     4. Speed: Speed of entire drawing (Trajectory + Shape).
-Draw at a <strong id="speed2"></strong> speed.
-                     </br>
-                  </p>
-                  <div>
-                     For further instructions, please see following example video:
-                  </div>
-                  <div class = "row">
-                     <div class = "row">
-                        <div class = "col">
-                           <iframe width="560" height="315" src="https://www.youtube.com/embed/r2Eq25BEAks" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                     </div>
-                     <p id=behavior_words></p>
-                  </div>
-                  <div class="container mt-5"></div>
-               </div>
-               <div class = "col">
-                  <div class = "col">
-                        <div class="row">
-   <div style="text-align: center padding: 10" class = "col">
-      <input id="smit" class="btn btn-primary w-10" type="submit" value="Submit">
-      <input id="vvid" class="btn btn-primary w-10" style = "padding = 10" type="submit" value="View Video">
-      <input id="cboard" class="btn btn-primary w-10" type="submit" value="Clear Board">
-      <input id="ddata" class="btn btn-primary w-10" type="submit" value="Download Data">
-   </div>
-                        </div>
-                        <div class="row">
-                     <div id="sketch" class="row">
-                        <div class="col">
-                           <canvas id="paint" style="background-color: white"width = 480 height = 360 class="border border-dark rounded">
-                           We're sorry, the browser you are using does not support 
-                           <canvas>
-                              . Please upgrade your browser. 
-                              <!--Anything inside of the canvas tag will only display if the browser does not support the <canvas> tag.-->
-                           </canvas>
-                        </div>
+from io import BytesIO
+import subprocess, os, platform
+from pathlib import Path
 
-                           <video id="video1" class="border border-dark rounded" width = 480 height = 360 autoplay controls></video>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
+from datetime import datetime
 
-    <div class = "col" >
-        <div class = "row">
-            <div class = "col" style="padding: 0">
+csv.field_size_limit(sys.maxsize)
 
-                   <p> Shape: one, Trajectory: moving in <br>
-                    triangle, Location: bottom left, Speed: slow </p> 
-               <iframe width="350" height="200" src="https://www.youtube.com/embed/ky3dJKhAYAg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div> 
-            <div class = "col"style="padding: 0">
-            
-                   <p> Shape: circle, Trajectory: moving in triangle,  <br>
-                  Location: top right, Speed: fast</p> 
-                      <iframe width="350" height="200" src="https://www.youtube.com/embed/1H8X7f7mBC0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-            </div>
-            <div class = "col"style="padding: 0">
-            
-                   <p> Shape: two, Trajectory: moving up, <br>
-                  Location: bottom right, Speed: slow
-</p> 
-                      <iframe width="350" height="200" src="https://www.youtube.com/embed/UalzJa4cbFY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+if __name__ == "__main__":
+    filename = str(sys.argv[1])  
+    np_bytes = BytesIO()
+    if 'csv' in filename:
+        with open(filename, mode='r') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
 
-            </div>
-            <div class = "col"style="padding: 0">
-            
-                   <p>Shape: zero, Trajectory: moving in triangle, <br>
-                     Location: bottom left, Speed: fast
-</p> 
-                      <iframe width="350" height="200" src="https://www.youtube.com/embed/IG82Dd94gC8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-            </div>
-        </div>
-    </div>
-   
-  
-    </div> 
-</div>
-<body>
-   <!-- You must include crowd-form so that your task submits answers to MTurk -->
-   <script>
-      // This part of the code is used for generating the random words to describe
-      // the task being completed.
-      var startExpTime = null;
-      
-      let words1 = "square circle spiral triangle zero one two three four five six seven eight nine";
-      var words1Array = words1.split(' ');
-      console.log(words1Array)
-      let words2 = "moving_left moving_right moving_down moving_up moving_in_circle moving_in_square moving_around_canvas moving_randomly moving_in_oval moving_in_diamond moving_in_triangle";
-      var words2Array = words2.split(' ');
-      console.log(words2Array)
-      let words3 = "top_left top_right bottom_right bottom_left center" 
-      var words3Array = words3.split(' ');
-      let words4 = "slow fast" 
-      var words4Array = words4.split(' ');
-      console.log(words3Array)
-      var selected_word1  = words1Array[Math.floor(Math.random()*words1Array.length)];
-      var selected_word2  = words2Array[Math.floor(Math.random()*words2Array.length)].replaceAll('_',' ');
-      var selected_word3  = words3Array[Math.floor(Math.random()*words3Array.length)].replaceAll('_',' ');
-      var selected_word4  = words4Array[Math.floor(Math.random()*words4Array.length)];
-//      var task = " <table style='width:100%'> <tr> <th>Shape:</th> <th>" + selected_word1 + "</th> </tr> <br>"  + " <tr> <th>Trajectory:</th> <th>" + selected_word2 + "</th> </tr> <br>"  + " <tr> <th>Location: </th> <th>"+ selected_word3 + "</th> </tr>"  + " <tr> <th>Speed: </th> <th>"+ selected_word4 + "</th> </tr> </table>";
-//      console.log(task);
-//      document.getElementById("behavior_words").innerHTML = task;
-      document.getElementById("traj").innerHTML = selected_word2;;
-      document.getElementById("traj2").innerHTML = selected_word2;;
-      document.getElementById("loca").innerHTML = selected_word3;;
-      document.getElementById("loca2").innerHTML = selected_word3;;
-      document.getElementById("loca3").innerHTML = selected_word3;;
-      document.getElementById("loca4").innerHTML = selected_word3;;
-      document.getElementById("loca5").innerHTML = selected_word3;;
-      document.getElementById("shape").innerHTML = selected_word1;;
-      document.getElementById("shape2").innerHTML = selected_word1;;
-      document.getElementById("shape3").innerHTML = selected_word1;;
-      document.getElementById("speed").innerHTML = selected_word4;;
-      document.getElementById("speed2").innerHTML = selected_word4;;
-      document.getElementById("speed3").innerHTML = selected_word4;;
-      
-      // This code is used for creating the media recorder associated with the
-      // canvas element.
-      var canvas = document.getElementById("paint");
-      //  canvas.width = window.innerWidth
-      // canvas.height = window.innerHeight
-      console.log(canvas)
-      var context = canvas.getContext("2d");
-      var videoStream = canvas.captureStream(30); 
-      var chunks = [];
-      var mediaRecorder = new MediaRecorder(videoStream);
-      var video = document.getElementById("video1"); 
-      console.log(video);
-      mediaRecorder.ondataavailable = function(e) {
-        chunks.push(e.data);
-        var blob = new Blob(chunks, { 'type' : 'video/mp4' });
-        console.log("chunks is " +  chunks  )
-        var videoURL = URL.createObjectURL(blob);
-        video.src = videoURL;
-        console.log(blob)
-      };
-
-//      console.log(Object.getOwnProprtyNames(mediaRecorder));
-      mediaRecorder.onpause = function(e) {
-        mediaRecorder.requestData();
-      };
-       mediaRecorder.onstop = function(e) {
-        var blob = new Blob(chunks, { 'type' : 'video/mp4' });
-        var videoURL = URL.createObjectURL(blob);
-        video.src = videoURL;
-      };     
-
-      function onPaint() {
-            ctx.beginPath();
-            ctx.moveTo(last_mouse.x, last_mouse.y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.closePath();
-            ctx.stroke();
-      }
-      
-      // This function is going to be used for adding event listeners
-      function confirm_dialog() {
-            bootbox.dialog({
-        message: "Do you wish to confirm this drawing??",
-        buttons: {
-            ok: {
-                label: 'Yes',
-                className: 'btn-success',
-                callback: sendJSON
-            },
-            cancel: {
-                label: 'No',
-                className: 'btn-danger',
-                callback: clearboard
-            }
-        },
-        callback: function (result) {
-            console.log('This was logged in the callback: ' + result);
-        }
-      });        
-      
-      
-       canvas.removeEventListener('mousemove', onPaint, false);
-      
-      
-      }
-      var smit = document.getElementById("smit");
-      console.log(smit);
-      if(smit.addEventListener){
-        console.log(smit.addEventListener);
-        smit.addEventListener("click", confirm_dialog ,false);
-      } 
-      else{
-        //ie doesn't have addEventListner
-        smit.attachEvent('onsubmit', confirm_dialog );
-      }
-      var vvid = document.getElementById("vvid");
-      console.log(vvid);
-      if(vvid.addEventListener){
-        console.log(vvid.addEventListener);
-        vvid.addEventListener("click", play_video ,false);
-      } 
-      else{
-        //ie doesn't have addEventListner
-        vvid.attachEvent('onsubmit', play_video );
-      }
-      var cboard = document.getElementById("cboard");
-      console.log(cboard);
-      if(cboard.addEventListener){
-        console.log(cboard.addEventListener);
-        cboard.addEventListener("click", clearboard ,false);
-      } 
-      else{
-        //ie doesn't have addEventListner
-        cboard.attachEvent('onsubmit', clearboard );
-      }
-      
-     
-      var ddata = document.getElementById("ddata");
-      console.log(ddata);
-      if(ddata.addEventListener){
-        console.log(ddata.addEventListener);
-        ddata.addEventListener("click", download_data ,false);
-      } 
-      else{
-        //ie doesn't have addEventListner
-        ddata.attachEvent('onsubmit', download_data );
-      }
-      function play_video(){
-        var blob = new Blob(chunks, { 'type' : 'video/mp4' });
-        var videoURL = URL.createObjectURL(blob);
-        video.src = videoURL;
-      }
-      
-      // Clear the canvas
-      function clearboard(){
-      
-      var canvas = document.getElementById("paint");
-      var context = canvas.getContext('2d');
-      context.clearRect(0, 0, canvas.width, canvas.height)
-      chunks = [];
-      mediaRecorder.stop();
-      
-      }
-      function sendJSON(){
-      var totalTime = (new Date()) - startExpTime;
-      var newDate = new Date();
-      $('#assignmentId').val(GetAssignmentId());
-      var curID = (IsOnTurk())? GetAssignmentId() : prompt("Doesn't look like you " + 
-      "are on Turk, so you're probably testing. Enter an ID to save your data with:", "id");
-                 var blob = new Blob(chunks, { 'type' : 'video/webm' });
-                 console.log(blob)
-                console.log(chunks);
-                var formData = new FormData();
-      //formData.append("curID", curID,) 
-      console.log(GetAssignmentId());
-
-      
-      
-        const urlParams = new URLSearchParams(window.location.search)
-       
-        // create the form element and point it to the correct endpoint
-        const form = document.createElement('form')
-        //form.action = (new URL('mturk/externalSubmit', urlParams.get('turkSubmitTo'))).href
-//      form.action = "https://workersandbox.mturk.com/mturk/externalSubmit";
-      form.action = "https://mturk.com/mturk/externalSubmit";
-        form.method = 'post'
-       
-        // attach the assignmentId
-        const inputAssignmentId = document.createElement('input')
-        inputAssignmentId.name = 'assignmentId'
-        inputAssignmentId.value = urlParams.get('assignmentId')
-        inputAssignmentId.hidden = true
-        form.appendChild(inputAssignmentId)
-       
-        // attach data I want to send back
-      shape = createDataElement("Shape", selected_word1);
-      form.appendChild(shape);
-      locations = createDataElement("Location", selected_word2);
-      form.appendChild(locations);
-      Movement = createDataElement("Movement", selected_word3);
-      form.appendChild(Movement);
-      Speed = createDataElement("Speed", selected_word4);
-      form.appendChild(Speed);
-      //video = createDataElement("video", blob);
-      const video = document.createElement("input");
-      video.name = "video";
-      //  video.value =  JSON.stringify(blobToBase64(blob));
-      (async () => {
-      const b64 = await blobToBase64(blob);
-      const jsonString = JSON.stringify({blob: b64});
-      console.log(jsonString);
-      video.value = jsonString;
-        video.hidden = true;
-      form.appendChild(video);
-      console.log(video); 
-        // attach the form to the HTML document and trigger submission
-        document.body.appendChild(form)
-        form.submit()
-      })();
-      
-
-        
-      }
-      function GetWorkerId() {
-        var workerId = turkGetParam( 'workerId', 'NONE' );
-        return workerId;
-      }	
-      const blobToBase64 = (blob) => {
-      return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = function () {
-      resolve(reader.result);
-      };
-      });
-      };
-      const getMethods = (obj) => {
-      let properties = new Set()
-      let currentObj = obj
-      do {
-      Object.getOwnPropertyNames(currentObj).map(item => properties.add(item))
-      } while ((currentObj = Object.getPrototypeOf(currentObj)))
-      return [...properties.keys()].filter(item => typeof obj[item] === 'function')
-      }
-      function IsTurkPreview() {
-      return GetWorkerId() == "NONE";
-      }	
-      function createDataElement(name, data){
-      const newdata = document.createElement("input");
-      newdata.name = name;
-        newdata.value = JSON.stringify(data)
-        newdata.hidden = true
-      return  newdata
-      }
-      
-      function IsOnTurk() {
-      try {
-      return ((window.location.host.indexOf('mturk')!=-1) || document.forms["mturk_form"] ||
-      (top != self && window.parent.location.host.indexOf("mturk") != -1));
-      } catch(err) {
-      // insecure content trying to access https://turk probably, so say yes:
-      return true;
-      }
-      }
-      
-      function GetAssignmentId() {
-      var assignmentId = turkGetParam( 'assignment_id', 'NONE' );
-      return assignmentId;
-      }	
-      function download_data(){
-      var totalTime = (new Date()) - startExpTime;
-      var newDate = new Date();
-      $('#assignmentId').val(GetAssignmentId());
-                 var blob = new Blob(chunks, { 
-                                             'type' : 'video/webm' 
-                                             } );
-      thisdata = {};
-      datalist = [];
-      thisdata.datalist = datalist
-      thisdata.datalist.push({"Shape" : selected_word1});
-      thisdata.datalist.push({"Location" : selected_word2});
-      thisdata.datalist.push({"Movement" : selected_word3});
-      thisdata.datalist.push({"Speed" : selected_word4});
-      var dt = new Date( "December 25, 1995 23:15:20" );
-      (async () => {
-      const b64 = await blobToBase64(blob);
-      const jsonString = JSON.stringify({blob: b64});
-      thisdata.datalist.push({"Video": jsonString})
-      var a = document.createElement("a");
-      var file = new Blob([JSON.stringify(thisdata)], {type: 'text/plain'});
-      a.href = URL.createObjectURL(file);
-      console.log(selected_word1)
-      a.download = dt.getTime() + '_draw_data.txt', 'text/plain';
-      a.click();
-      })();
-      
-      
-      }
-
-      function download(content, fileName, contentType) {
-
-      }
-      
-      /**
-      * Gets a URL parameter from the query string
-      */
-      function turkGetParam( name, defaultValue ) { 
-      var regexS = "[\?&]"+name+"=([^&#]*)"; 
-      var regex = new RegExp( regexS ); 
-      var tmpURL = window.location.href; 
-      var results = regex.exec( tmpURL ); 
-      if( results == null ) { 
-      return defaultValue; 
-      } else { 
-      return results[1];    
-      } 
-      }
-      
-      /**
-      * URL decode a parameter
-      */
-      function decode(strToDecode)
-      {
-      var encoded = strToDecode;
-      return unescape(encoded.replace(/\+/g,  " "));
-      }
-      
-      
-      /**
-      * Returns the Mechanical Turk Site to post the HIT to (sandbox. prod)
-      */
-      function turkGetSubmitToHost() {
-      return decode(turkGetParam("turkSubmitTo", "https://www.mturk.com"));
-      }
-      
-      
-      /**
-      * Sets the assignment ID in the form. Defaults to use mturk_form and submitButton
-      */ 
-      function turkSetAssignmentID( form_name, button_name ) {
-      
-      if (form_name == null) {
-      form_name = "mturk_form";
-      }
-      
-      if (button_name == null) {
-      button_name = "submitButton";
-      }
-      
-      assignmentID = turkGetParam('assignmentId', "");
-      document.getElementById('assignmentId').value = assignmentID;
-      
-      if (assignmentID == "ASSIGNMENT_ID_NOT_AVAILABLE") { 
-      // If we're previewing, disable the button and give it a helpful message
-      btn = document.getElementById(button_name);
-      if (btn) {
-      btn.disabled = true; 
-      btn.value = "You must ACCEPT the HIT before you can submit the results.";
-      } 
-      }
-      
-      form = document.getElementById(form_name); 
-      if (form) {
-      form.action = turkGetSubmitToHost() + "/mturk/externalSubmit"; 
-      }
-      }
-      
-      (function() {
-        var canvas = document.querySelector('#paint');
-        var ctx = canvas.getContext('2d');
-      
-        var sketch = document.querySelector('#sketch');
-        var sketch_style = getComputedStyle(sketch);
-      //    canvas.width = parseInt(sketch_style.getPropertyValue('width'));
-      //    canvas.height = parseInt(sketch_style.getPropertyValue('height'));
-      
-        var mouse = {x: 0, y: 0};
-        var last_mouse = {x: 0, y: 0};
-      
-        /* Mouse Capturing Work */
-        canvas.addEventListener('mousemove', function(e) {
-            last_mouse.x = mouse.x;
-            last_mouse.y = mouse.y;
-      
-            mouse.x = e.pageX - this.offsetLeft;
-            mouse.y = e.pageY - this.offsetTop;
-        }, false);
-      
-      
-        /* Drawing on Paint App */
-        ctx.lineWidth = "15";
-        ctx.lineJoin = 'round';
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = 'green';
-      
-        canvas.addEventListener('mousedown', function(e) {
-        
-            if (mediaRecorder.state == "inactive"){
-                mediaRecorder.start()
-                startExpTime = new Date();
+            line_count = 0
+            for row in csv_reader:
+                if line_count == 0:
+                    print(f'Column names are {", ".join(row)}')
+                    line_count += 1
+                video = row["video"] 
+    #            video_decoded = base64.b64decode(eval(video)["blob"])
+    #            video_decoded = video.encode()
                 
-            }
-            else {mediaRecorder.resume()}
-            canvas.addEventListener('mousemove', onPaint, false);
-//                       setTimeout(function(){
-//                      if (mediaRecorder.state == "recording"){
-//                       mediaRecorder.stop();
-//                          }
-//                      }, 30000);        
-       }, false);
-      
-        canvas.addEventListener('mouseup', function(){
-        mediaRecorder.pause()
-         canvas.removeEventListener('mousemove', onPaint, false);
-      
-      
-      }, false);
-      
-        var onPaint = function() {
-            ctx.beginPath();
-            ctx.moveTo(last_mouse.x, last_mouse.y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.closePath();
-            ctx.stroke();
-        };
-      
-      }());
-      
-   </script>
-</body>
-</html>
+
+                video_decoded =  base64.b64decode(eval(video)['blob'][23:])
+    #            loaded_b = BytesIO(video_decoded)
+    #            loaded_np = np.load(loaded_b, allow_pickle = True)
+    #            video_decoded_ascii = video_decoded.encode('ascii')
+    #            video_decoded =  eval(video)['blob'][23:]
+    #            frames = iio.imread(video_decoded, index = None, format_hint = ".webm")
+                image_result = open('temp.webm', 'wb')
+                image_result.write(video_decoded)
+                print(f"row['WorkerId'] is {row['WorkerId'] } ")
+                print(f"row['Symbol'] is {row['Symbol'] } ")
+                print(f"row['Size'] is {row['Size'] } ")
+                print(f"row['Rotation'] is {row['Rotation'] } ")
+                print(f"row['Speed'] is {row['Speed'] } ")
+                data1 = row['Symbol']
+                data2 = row['Size']
+                data3 = row['Rotation']
+                data4 = row['Speed']
+                   
+                now = datetime.now()
+                dt_string = now.strftime("-%d-%m-%Y%H:%M:%S")
+                video_name = 'amazon_videos/' +  dt_string + data1 + '_' + data2 + '_' + data3 + '_' + data4 + '.webm'
+                subprocess.call(('xdg-open', 'temp.webm'))
+
+                input("Press Enter to continue...")
+    elif 'txt' in filename:
+        with open(filename, 'r') as f: 
+            data = f.read() 
+            data_eval = eval(data)
+            video = data_eval['datalist'][4]['Video']
+            data1 = data_eval['datalist'][0]['Symbol']
+            data2 = data_eval['datalist'][1]['Size']
+            data3 = data_eval['datalist'][2]['Rotation']
+            data4 = data_eval['datalist'][3]['Speed']
+            video_decoded =  base64.b64decode(eval(video)['blob'][23:])
+            now = datetime.now()
+            dt_string = now.strftime("-%d-%m-%Y%H:%M:%S_")
+            video_name = 'videos/' +  dt_string + data1 + '_' + data2 + '_' + data3 + '_' + data4 + '.webm'
+            image_result = open(video_name, 'wb')
+            image_result.write(video_decoded)
+#            subprocess.call(('xdg-open', video_name))
+#            input("Press Enter to continue...")
+            
+            
+        
+        
 
