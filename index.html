@@ -17,7 +17,7 @@
    <h2>Collection for a Drawing Dataset</h2>
    <div class="row">
       <div class ="col">
-         <div class="mt-4 p-5 bg-dark text-white rounded">
+         <div class="mt-2 p-2 bg-dark text-white rounded">
             <div class = "row">
                <div class = "col">
                   <p>
@@ -77,6 +77,15 @@
                </div>
                <div class = "col">
                   <div class = "col">
+                        <div class="row">
+   <div style="text-align: center padding: 10" class = "col">
+      <input id="smit" class="btn btn-primary w-10" type="submit" value="Submit">
+      <input id="vvid" class="btn btn-primary w-10" style = "padding = 10" type="submit" value="View Video">
+      <input id="cboard" class="btn btn-primary w-10" type="submit" value="Clear Board">
+      <input id="ddata" class="btn btn-primary w-10" type="submit" value="Download Data">
+   </div>
+                        </div>
+                        <div class="row">
                      <div id="sketch" class="row">
                         <div class="col">
                            <canvas id="paint" style="background-color: white"width = 480 height = 360 class="border border-dark rounded">
@@ -86,7 +95,7 @@
                               <!--Anything inside of the canvas tag will only display if the browser does not support the <canvas> tag.-->
                            </canvas>
                         </div>
-                        <div class="col">
+
                            <video id="video1" class="border border-dark rounded" width = 480 height = 360 autoplay controls></video>
                         </div>
                      </div>
@@ -96,15 +105,43 @@
          </div>
       </div>
    </div>
-   <div style="text-align: center">
-      <input id="smit" class="btn btn-primary w-100" type="submit" value="Submit">
-   </div>
-   <div style="text-align: center">
-      <input id="vvid" class="btn btn-primary w-100" type="submit" value="View Video">
-   </div>
-   <div style="text-align: center">
-      <input id="cboard" class="btn btn-primary w-100" type="submit" value="Clear Board">
-   </div>
+
+    <div class = "col" >
+        <div class = "row">
+            <div class = "col" style="padding: 0">
+
+                   <p> Shape: one, Trajectory: moving in <br>
+                    triangle, Location: bottom left, Speed: slow </p> 
+               <iframe width="350" height="200" src="https://www.youtube.com/embed/ky3dJKhAYAg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div> 
+            <div class = "col"style="padding: 0">
+            
+                   <p> Shape: circle, Trajectory: moving in triangle,  <br>
+                  Location: top right, Speed: fast</p> 
+                      <iframe width="350" height="200" src="https://www.youtube.com/embed/1H8X7f7mBC0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            </div>
+            <div class = "col"style="padding: 0">
+            
+                   <p> Shape: two, Trajectory: moving up, <br>
+                  Location: bottom right, Speed: slow
+</p> 
+                      <iframe width="350" height="200" src="https://www.youtube.com/embed/UalzJa4cbFY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            </div>
+            <div class = "col"style="padding: 0">
+            
+                   <p>Shape: zero, Trajectory: moving in triangle, <br>
+                     Location: bottom left, Speed: fast
+</p> 
+                      <iframe width="350" height="200" src="https://www.youtube.com/embed/IG82Dd94gC8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            </div>
+        </div>
+    </div>
+   
+  
+    </div> 
 </div>
 <body>
    <!-- You must include crowd-form so that your task submits answers to MTurk -->
@@ -227,6 +264,18 @@
         //ie doesn't have addEventListner
         cboard.attachEvent('onsubmit', clearboard );
       }
+      
+     
+      var ddata = document.getElementById("ddata");
+      console.log(ddata);
+      if(ddata.addEventListener){
+        console.log(ddata.addEventListener);
+        ddata.addEventListener("click", download_data ,false);
+      } 
+      else{
+        //ie doesn't have addEventListner
+        ddata.attachEvent('onsubmit', download_data );
+      }
       function play_video(){
         var blob = new Blob(chunks, { 'type' : 'video/mp4' });
         var videoURL = URL.createObjectURL(blob);
@@ -264,7 +313,7 @@
         const form = document.createElement('form')
         //form.action = (new URL('mturk/externalSubmit', urlParams.get('turkSubmitTo'))).href
 //      form.action = "https://workersandbox.mturk.com/mturk/externalSubmit";
-      form.action = "https://www.mturk.com/mturk/externalSubmit";
+      form.action = "https://mturk.com/mturk/externalSubmit";
         form.method = 'post'
        
         // attach the assignmentId
@@ -349,6 +398,39 @@
       var assignmentId = turkGetParam( 'assignment_id', 'NONE' );
       return assignmentId;
       }	
+      function download_data(){
+      var totalTime = (new Date()) - startExpTime;
+      var newDate = new Date();
+      $('#assignmentId').val(GetAssignmentId());
+                 var blob = new Blob(chunks, { 
+                                             'type' : 'video/webm' 
+                                             } );
+      thisdata = {};
+      datalist = [];
+      thisdata.datalist = datalist
+      thisdata.datalist.push({"Shape" : selected_word1});
+      thisdata.datalist.push({"Location" : selected_word2});
+      thisdata.datalist.push({"Movement" : selected_word3});
+      thisdata.datalist.push({"Speed" : selected_word4});
+      var dt = new Date( "December 25, 1995 23:15:20" );
+      (async () => {
+      const b64 = await blobToBase64(blob);
+      const jsonString = JSON.stringify({blob: b64});
+      thisdata.datalist.push({"Video": jsonString})
+      var a = document.createElement("a");
+      var file = new Blob([JSON.stringify(thisdata)], {type: 'text/plain'});
+      a.href = URL.createObjectURL(file);
+      console.log(selected_word1)
+      a.download = dt.getTime() + '_draw_data.txt', 'text/plain';
+      a.click();
+      })();
+      
+      
+      }
+
+      function download(content, fileName, contentType) {
+
+      }
       
       /**
       * Gets a URL parameter from the query string
