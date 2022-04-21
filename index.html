@@ -198,7 +198,6 @@ Draw at a <strong id="speed2"></strong> speed.
       mediaRecorder.ondataavailable = function(e) {
         chunks.push(e.data);
         var blob = new Blob(chunks, { 'type' : 'video/mp4' });
-        console.log("chunks is " +  chunks  )
         var videoURL = URL.createObjectURL(blob);
         video.src = videoURL;
         console.log(blob)
@@ -570,11 +569,6 @@ Draw at a <strong id="speed2"></strong> speed.
             ctx.moveTo(last_mouse.x, last_mouse.y);
             strokes.push([last_mouse.x, last_mouse.y, mouse.x, mouse.y]);
             ctx.lineTo(mouse.x, mouse.y);
-            console.log(strokes);
-            console.log("mouse.x is " +  mouse.x  );
-            console.log("JSON.stringify(strokes) is " +  JSON.stringify(strokes)
-)
-            console.log("last_mouse.x is " +  last_mouse.x  )
             ctx.closePath();
             ctx.stroke();
         };
@@ -584,5 +578,4 @@ Draw at a <strong id="speed2"></strong> speed.
    </script>
 </body>
 </html>
-
 
