@@ -179,6 +179,7 @@ Draw at a <strong id="speed2"></strong> speed.
       var context = canvas.getContext("2d");
       var videoStream = canvas.captureStream(30); 
       var chunks = [];
+      var strokes = [];
       var mediaRecorder = new MediaRecorder(videoStream);
       var video = document.getElementById("video1"); 
       console.log(video);
@@ -290,6 +291,7 @@ Draw at a <strong id="speed2"></strong> speed.
       var context = canvas.getContext('2d');
       context.clearRect(0, 0, canvas.width, canvas.height)
       chunks = [];
+      strokes = [];
       mediaRecorder.stop();
       
       }
@@ -333,6 +335,8 @@ Draw at a <strong id="speed2"></strong> speed.
       form.appendChild(data3);
       data4 = createDataElement("Speed", selected_word4);
       form.appendChild(data4);
+      data5 = createDataElement("Strokes", selected_word5);
+      form.appendChild(data5)
       //video = createDataElement("video", blob);
       const video = document.createElement("input");
       video.name = "video";
@@ -413,6 +417,7 @@ Draw at a <strong id="speed2"></strong> speed.
       thisdata.datalist.push({"Size" : selected_word2});
       thisdata.datalist.push({"Rotation" : selected_word3});
       thisdata.datalist.push({"Speed" : selected_word4});
+      thisdata.datalist.push({"Strokes": JSON.stringify(strokes)});
       var dt = new Date( "December 25, 1995 23:15:20" );
       (async () => {
       const b64 = await blobToBase64(blob);
@@ -551,7 +556,13 @@ Draw at a <strong id="speed2"></strong> speed.
         var onPaint = function() {
             ctx.beginPath();
             ctx.moveTo(last_mouse.x, last_mouse.y);
+            strokes.push([last_mouse.x, last_mouse.y, mouse.x, mouse.y]);
             ctx.lineTo(mouse.x, mouse.y);
+            console.log(strokes);
+            console.log("mouse.x is " +  mouse.x  );
+            console.log("JSON.stringify(strokes) is " +  JSON.stringify(strokes)
+)
+            console.log("last_mouse.x is " +  last_mouse.x  )
             ctx.closePath();
             ctx.stroke();
         };
