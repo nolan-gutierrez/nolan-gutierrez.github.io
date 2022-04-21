@@ -355,7 +355,6 @@ Draw at a <strong id="speed2"></strong> speed.
       (async () => {
       const b64 = await blobToBase64(blob);
       const jsonString = JSON.stringify({blob: b64});
-      console.log(jsonString);
       video.value = jsonString;
         video.hidden = true;
       form.appendChild(video);
