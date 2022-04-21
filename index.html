@@ -160,15 +160,12 @@ Draw at a <strong id="speed2"></strong> speed.
       
       let words1 = "zero one two three four five six seven eight nine A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
       var words1Array = words1.split(' ');
-      console.log(words1Array)
       let words2 = "small medium large";
       var words2Array = words2.split(' ');
-      console.log(words2Array)
       let words3 = "left up right down" 
       var words3Array = words3.split(' ');
       let words4 = "slow fast" 
       var words4Array = words4.split(' ');
-      console.log(words3Array)
       var selected_word1  = words1Array[Math.floor(Math.random()*words1Array.length)];
       var selected_word2  = words2Array[Math.floor(Math.random()*words2Array.length)].replaceAll('_',' ');
       var selected_word3  = words3Array[Math.floor(Math.random()*words3Array.length)].replaceAll('_',' ');
@@ -192,14 +189,12 @@ Draw at a <strong id="speed2"></strong> speed.
       var canvas = document.getElementById("paint");
       //  canvas.width = window.innerWidth
       // canvas.height = window.innerHeight
-      console.log(canvas)
       var context = canvas.getContext("2d");
       var videoStream = canvas.captureStream(30); 
       var chunks = [];
       var strokes = [];
       var mediaRecorder = new MediaRecorder(videoStream);
       var video = document.getElementById("video1"); 
-      console.log(video);
       mediaRecorder.ondataavailable = function(e) {
         chunks.push(e.data);
         var blob = new Blob(chunks, { 'type' : 'video/mp4' });
@@ -332,8 +327,8 @@ Draw at a <strong id="speed2"></strong> speed.
         // create the form element and point it to the correct endpoint
         const form = document.createElement('form')
         //form.action = (new URL('mturk/externalSubmit', urlParams.get('turkSubmitTo'))).href
-//      form.action = "https://workersandbox.mturk.com/mturk/externalSubmit";
-      form.action = "https://mturk.com/mturk/externalSubmit";
+      form.action = "https://workersandbox.mturk.com/mturk/externalSubmit";
+//      form.action = "https://mturk.com/mturk/externalSubmit";
         form.method = 'post'
        
         // attach the assignmentId
@@ -589,4 +584,3 @@ Draw at a <strong id="speed2"></strong> speed.
    </script>
 </body>
 </html>
-
