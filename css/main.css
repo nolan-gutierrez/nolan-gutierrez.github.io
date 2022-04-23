@@ -162,3 +162,34 @@ div.rotaterightlarge {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-gap: 10px;
 }
+
+div.rotateup {
+    width: 15px;
+    display: flex;
+    flex: 1;
+    height: 20;
+    transform: rotate(0deg); 
+}
+div.rotateleft {
+    width: 15px;
+    display: flex;
+    flex: 1;
+    height: 20;
+    transform: rotate(-90deg); 
+}
+
+div.rotatedown {
+    width: 15px;
+    display: flex;
+    flex: 1;
+    height: 20;
+    transform: rotate(-180deg); 
+}
+
+div.rotateright {
+    width: 15px;
+    display: flex;
+    flex: 1;
+    height: 20;
+    transform: rotate(-270deg); 
+}
