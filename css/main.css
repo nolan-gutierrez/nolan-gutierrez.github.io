@@ -193,3 +193,29 @@ div.rotateright {
     height: 20;
     transform: rotate(-270deg); 
 }
+
+span.rotatesup {
+    width: 1px;
+    height: 1px;
+    padding: 7px;
+display: inline-block;
+    transform: rotate(0deg); 
+}
+
+span.rotatesleft {
+display: inline-block;
+    padding: 7px;
+    transform: rotate(-90deg); 
+}
+
+span.rotatesdown {
+display: inline-block;
+    transform: rotate(-180deg); 
+    padding: 7px;
+}
+
+span.rotatesright {
+display: inline-block;
+    padding: 7px;
+    transform: rotate(-270deg); 
+}
