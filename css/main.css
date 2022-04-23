@@ -1,36 +1,161 @@
-div.rotateup {
-    width: 15px;
-    display: flex;
-    flex: 1;
-    height: 20;
+div.rotateupsmall {
+    width: 30px;
+    height: 30px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #FFFFFF;
+    background-color: white;
+    text-align: center;
+    color: black;
+    font-size:7px;
     transform: rotate(0deg); 
 }
-div.rotateleft {
-    width: 15px;
-    display: flex;
-    flex: 1;
-    height: 20;
+div.rotateleftsmall {
+    width: 30px;
+  background-color: white;
+    height: 30px;
+    font-size:7px;
+    text-align: center;
+    color: black;
+    border-style: solid;
+    border-width: thin;
+    border-color: #FFFFFF;
     transform: rotate(-90deg); 
 }
 
 
-div.rotatedown {
-    width: 15px;
-    display: flex;
-    flex: 1;
-    height: 20;
+div.rotatedownsmall {
+    width: 30px;
+  background-color: white;
+    text-align: center;
+    font-size:7px;
+    color: black;
+    height: 30px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #FFFFFF;
     transform: rotate(-180deg); 
 }
 
 
-div.rotateright {
-    width: 15px;
-    display: flex;
-    flex: 1;
-    height: 20;
+div.rotaterightsmall {
+    width: 30px;
+    text-align: center;
+    height: 30px;
+    font-size:7px;
+    color: black;
+  background-color: white;
+    border-style: solid;
+    border-width: thin;
+    border-color: #FFFFFF;
     transform: rotate(-270deg); 
 }
 
+div.rotateupmedium {
+    width: 30px;
+  background-color: white;
+    height: 30px;
+    font-size:15px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #FFFFFF;
+    color: black;
+    text-align: center;
+    transform: rotate(0deg); 
+}
+div.rotateleftmedium {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-size:15px;
+    border-style: solid;
+    border-width: thin;
+  background-color: white;
+    border-color: #FFFFFF;
+    transform: rotate(-90deg); 
+    color: black;
+}
+
+
+div.rotatedownmedium {
+    width: 30px;
+    text-align: center;
+    height: 30px;
+    font-size:15px;
+  background-color: white;
+    color: black;
+    border-style: solid;
+    border-width: thin;
+    border-color: #FFFFFF;
+    transform: rotate(-180deg); 
+}
+
+
+div.rotaterightmedium {
+    width: 30px;
+  background-color: white;
+    text-align: center;
+    height: 30px;
+    border-style: solid;
+    font-size:15px;
+    border-width: thin;
+    border-color: #FFFFFF;
+    color: black;
+    transform: rotate(-270deg); 
+}
+
+div.rotateuplarge {
+    width: 30px;
+    height: 30px;
+    font-size:22px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #FFFFFF;
+    text-align: center;
+    transform: rotate(0deg); 
+  background-color: white;
+    color: black;
+}
+div.rotateleftlarge {
+    width: 30px;
+    font-size:22px;
+    height: 30px;
+    color: black;
+  background-color: white;
+    text-align: center;
+    border-style: solid;
+    border-width: thin;
+    border-color: #FFFFFF;
+    transform: rotate(-90deg); 
+}
+
+
+div.rotatedownlarge {
+    width: 30px;
+    text-align: center;
+    height: 30px;
+    font-size:22px;
+    border-style: solid;
+  background-color: white;
+    color: black;
+    border-width: thin;
+    border-color: #FFFFFF;
+    transform: rotate(-180deg); 
+}
+
+
+div.rotaterightlarge {
+    width: 30px;
+  background-color: white;
+    text-align: center;
+    font-size:22px;
+    height: 30px;
+    color: black;
+    border-style: solid;
+    border-width: thin;
+    border-color: #FFFFFF;
+    transform: rotate(-270deg); 
+}
 
 .grid-container {
     display: grid;
