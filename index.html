@@ -38,15 +38,21 @@
                         the following characteristics: 
                         --> 
                      Please input your drawing in the canvas (white box) as per instructions. 
-Draw a <strong id=size></strong>-sized and  <strong id=rotation></strong>-rotated <strong id=symbol></strong>  at a <strong id=speed></strong> speed.
+Draw a <strong id=size></strong>-sized and <strong id=rotation></strong>-rotated
+<strong id="symbol9"> </strong> at a <strong id=speed></strong> speed in any
+location,
+or:
+<div class="rotateup" id="symbol">  <div class="center" id="symbol8"> </div>
+</div> 
+
                     If you click no after pressing submit, you will
                      be able to start over. Note that you can let go of the left 
                      click without stopping the video. 
                      
                      Please note that this application only works in a desktop
 browser.
-                     
-                     The instructions consist of four characteristic components: 
+                      
+                    The instructions consist of four characteristic components: 
                      
                      <br>
                      <br> 
@@ -77,6 +83,7 @@ direction. Point the top of your <strong id = "symbol3" ></strong> <strong id=
                      4. Speed: Speed at which you draw your letter/number.
 Draw at a <strong id="speed2"></strong> speed.
                      </br>
+
                   </p>
                   <div>
                      For further instructions, please see following example video:
@@ -188,11 +195,16 @@ Draw at a <strong id="speed2"></strong> speed.
 //      var task = " <table style='width:100%'> <tr> <th>Shape:</th> <th>" + selected_word1 + "</th> </tr> <br>"  + " <tr> <th>Trajectory:</th> <th>" + selected_word2 + "</th> </tr> <br>"  + " <tr> <th>Location: </th> <th>"+ selected_word3 + "</th> </tr>"  + " <tr> <th>Speed: </th> <th>"+ selected_word4 + "</th> </tr> </table>";
 //      console.log(task);
 //      document.getElementById("behavior_words").innerHTML = task;
+      document.getElementById("size").innerHTML = selected_word2;
+//      document.getElementById("symbol").innerHTML = selected_word1;
+      document.getElementById("symbol8").innerHTML = selected_word1;
+      document.getElementById("speed").innerHTML = selected_word4;
+      
+     
       document.getElementById("size").innerHTML = selected_word2;;
       document.getElementById("size2").innerHTML = selected_word2;;
       document.getElementById("rotation").innerHTML = selected_word3;;
       document.getElementById("rotation2").innerHTML = selected_word3;;
-      document.getElementById("symbol").innerHTML = selected_word1;;
       document.getElementById("symbol1").innerHTML = selected_word1;;
       document.getElementById("symbol2").innerHTML = selected_word1;;
       document.getElementById("symbol3").innerHTML = selected_word1;;
@@ -200,9 +212,15 @@ Draw at a <strong id="speed2"></strong> speed.
       document.getElementById("symbol5").innerHTML = selected_word1;;
       document.getElementById("symbol6").innerHTML = selected_word1;;
       document.getElementById("symbol7").innerHTML = selected_word1;;
+      document.getElementById("symbol9").innerHTML = selected_word1;;
       document.getElementById("speed").innerHTML = selected_word4;;
       document.getElementById("speed2").innerHTML = selected_word4;;
-      
+      console.log(selected_word3 == "up");
+      console.log(selected_word3);
+ 
+
+      document.getElementById("symbol").className ="rotate" + selected_word3 + selected_word2;
+        
       // This code is used for creating the media recorder associated with the
       // canvas element.
       var canvas = document.getElementById("paint");
