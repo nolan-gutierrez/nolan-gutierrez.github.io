@@ -28,6 +28,16 @@ p {
     line-height: 1.4em;
     color: #333;
 }
+div {
+  width: 300px;
+  height: 100px;
+  background-color: yellow;
+  border: 1px solid black;
+}
+
+div#myDiv {
+  transform: rotate(90deg);
+}
 footer {
     border-top: 1px solid #d5d5d5;
     font-size: .8em;
