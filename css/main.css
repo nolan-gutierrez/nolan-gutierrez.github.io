@@ -1,20 +1,20 @@
 div.rotateupsmall {
-    width: 30px;
-    height: 30px;
+    width: 300px;
+    height: 300px;
     border-style: solid;
     border-width: thin;
     border-color: #FFFFFF;
     background-color: white;
     text-align: center;
     color: black;
-    font-size:7px;
+    font-size:70px;
     transform: rotate(0deg); 
 }
 div.rotateleftsmall {
-    width: 30px;
+    width: 300px;
   background-color: white;
-    height: 30px;
-    font-size:7px;
+    height: 300px;
+    font-size:70px;
     text-align: center;
     color: black;
     border-style: solid;
@@ -25,12 +25,12 @@ div.rotateleftsmall {
 
 
 div.rotatedownsmall {
-    width: 30px;
+    width: 300px;
   background-color: white;
     text-align: center;
-    font-size:7px;
+    font-size:70px;
     color: black;
-    height: 30px;
+    height: 300px;
     border-style: solid;
     border-width: thin;
     border-color: #FFFFFF;
@@ -39,10 +39,10 @@ div.rotatedownsmall {
 
 
 div.rotaterightsmall {
-    width: 30px;
+    width: 300px;
     text-align: center;
-    height: 30px;
-    font-size:7px;
+    height: 300px;
+    font-size:70px;
     color: black;
   background-color: white;
     border-style: solid;
@@ -52,10 +52,10 @@ div.rotaterightsmall {
 }
 
 div.rotateupmedium {
-    width: 30px;
+    width: 300px;
   background-color: white;
-    height: 30px;
-    font-size:15px;
+    height: 300px;
+    font-size:150px;
     border-style: solid;
     border-width: thin;
     border-color: #FFFFFF;
@@ -64,10 +64,10 @@ div.rotateupmedium {
     transform: rotate(0deg); 
 }
 div.rotateleftmedium {
-    width: 30px;
-    height: 30px;
+    width: 300px;
+    height: 300px;
     text-align: center;
-    font-size:15px;
+    font-size:150px;
     border-style: solid;
     border-width: thin;
   background-color: white;
@@ -78,10 +78,10 @@ div.rotateleftmedium {
 
 
 div.rotatedownmedium {
-    width: 30px;
+    width: 300px;
     text-align: center;
-    height: 30px;
-    font-size:15px;
+    height: 300px;
+    font-size:150px;
   background-color: white;
     color: black;
     border-style: solid;
@@ -92,12 +92,12 @@ div.rotatedownmedium {
 
 
 div.rotaterightmedium {
-    width: 30px;
+    width: 300px;
   background-color: white;
     text-align: center;
-    height: 30px;
+    height: 300px;
     border-style: solid;
-    font-size:15px;
+    font-size:150px;
     border-width: thin;
     border-color: #FFFFFF;
     color: black;
@@ -105,9 +105,9 @@ div.rotaterightmedium {
 }
 
 div.rotateuplarge {
-    width: 30px;
-    height: 30px;
-    font-size:22px;
+    width: 300px;
+    height: 300px;
+    font-size:220px;
     border-style: solid;
     border-width: thin;
     border-color: #FFFFFF;
@@ -117,9 +117,9 @@ div.rotateuplarge {
     color: black;
 }
 div.rotateleftlarge {
-    width: 30px;
-    font-size:22px;
-    height: 30px;
+    width: 300px;
+    font-size:220px;
+    height: 300px;
     color: black;
   background-color: white;
     text-align: center;
@@ -131,10 +131,10 @@ div.rotateleftlarge {
 
 
 div.rotatedownlarge {
-    width: 30px;
+    width: 300px;
     text-align: center;
-    height: 30px;
-    font-size:22px;
+    height: 300px;
+    font-size:220px;
     border-style: solid;
   background-color: white;
     color: black;
@@ -145,11 +145,11 @@ div.rotatedownlarge {
 
 
 div.rotaterightlarge {
-    width: 30px;
+    width: 300px;
   background-color: white;
     text-align: center;
-    font-size:22px;
-    height: 30px;
+    font-size:220px;
+    height: 300px;
     color: black;
     border-style: solid;
     border-width: thin;
