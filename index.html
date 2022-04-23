@@ -38,9 +38,11 @@
                         the following characteristics: 
                         --> 
                      Please input your drawing in the canvas (white box) as per instructions. 
-Draw a <strong id=size></strong>-sized and <strong id=rotation></strong>-rotated
-<strong id="symbol9"> </strong> at a <strong id=speed></strong> speed in any
+<span>Draw a <strong id=size></strong>-sized and <strong
+id=rotation></strong>-rotated <span id="symbol9">    </span>  
+              at a <strong id=speed></strong> speed in any
 location,
+</span>
 or:
 <div class="rotateup" id="symbol">  <div class="center" id="symbol8"> </div>
 </div> 
@@ -57,16 +59,16 @@ browser.
                      <br>
                      <br> 
                      1. Symbol: The Letter/Number to be drawn. You need to draw a
-<strong id= "symbol1" ></strong>
+<span id= "symbol1" ></span>
 
                      </br>
                      <br> 
                      2. Size: Size of the Letter/Number. Draw a <strong id
-="size2" ></strong> <strong id=symbol2></strong>.
+="size2" ></strong> <span id=symbol2></span>.
                      </br>
                      <br> 
                      3. Rotation: Point the top of the letter/number in this
-direction. Point the top of your <strong id = "symbol3" ></strong> <strong id=
+direction. Point the top of your <span id = "symbol3" ></span> <strong id=
 "rotation2"></strong>. 
 <div class="grid-container">
 <div> Up:</div>
@@ -200,21 +202,26 @@ Draw at a <strong id="speed2"></strong> speed.
       document.getElementById("symbol8").innerHTML = selected_word1;
       document.getElementById("speed").innerHTML = selected_word4;
       
-     
+      classname = "rotates" + selected_word3;
       document.getElementById("size").innerHTML = selected_word2;;
       document.getElementById("size2").innerHTML = selected_word2;;
-      document.getElementById("rotation").innerHTML = selected_word3;;
-      document.getElementById("rotation2").innerHTML = selected_word3;;
-      document.getElementById("symbol1").innerHTML = selected_word1;;
-      document.getElementById("symbol2").innerHTML = selected_word1;;
-      document.getElementById("symbol3").innerHTML = selected_word1;;
-      document.getElementById("symbol4").innerHTML = selected_word1;;
-      document.getElementById("symbol5").innerHTML = selected_word1;;
-      document.getElementById("symbol6").innerHTML = selected_word1;;
-      document.getElementById("symbol7").innerHTML = selected_word1;;
-      document.getElementById("symbol9").innerHTML = selected_word1;;
-      document.getElementById("speed").innerHTML = selected_word4;;
-      document.getElementById("speed2").innerHTML = selected_word4;;
+      document.getElementById("rotation").innerHTML = selected_word3;
+      document.getElementById("rotation2").innerHTML = selected_word3;
+      document.getElementById("symbol1").innerHTML = selected_word1;
+      document.getElementById("symbol1").className =classname;
+      document.getElementById("symbol2").innerHTML = selected_word1;
+      document.getElementById("symbol2").className =classname;
+      document.getElementById("symbol3").innerHTML = selected_word1;
+      document.getElementById("symbol3").className =classname;
+      console.log( document.getElementById("symbol3").className   );
+      document.getElementById("symbol4").innerHTML = selected_word1;
+      document.getElementById("symbol5").innerHTML = selected_word1;
+      document.getElementById("symbol6").innerHTML = selected_word1;
+      document.getElementById("symbol7").innerHTML = selected_word1;
+      document.getElementById("symbol9").innerHTML = selected_word1;
+      document.getElementById("symbol9").className =classname
+      document.getElementById("speed").innerHTML = selected_word4;
+      document.getElementById("speed2").innerHTML = selected_word4;
       console.log(selected_word3 == "up");
       console.log(selected_word3);
  
