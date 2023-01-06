@@ -2538,6 +2538,16 @@ var form_idx = 0
 //var formsCollection = document.getElementsByTagName("form");
 //var formsCollection = document.getElementById("my-form").elements;
 //var formsCollection = document.querySelectorAll("#my-form input[type=text][value='']")
+
+var smit = document.getElementById("submitButton");
+if(smit.addEventListener){
+  console.log(smit.addEventListener);
+  smit.addEventListener("click", sendForm ,false);
+} 
+else{
+  //ie doesn't have addEventListner
+  smit.attachEvent('onsubmit', confirm_dialog );
+}
 var formsCollection = document.querySelectorAll("div[id^='frame_']");    
 console.log(formsCollection.length);
 formsCollection[0].style.display = "block"
