@@ -2554,6 +2554,30 @@ function go_to_next_part_of_form(){
     formsCollection[form_idx].style.display = "block";
     console.log("formsCollection length is " +  formsCollection.length  );
 }
+function sendForm(){
+        const form = document.getElementById('my-form')
+       form.action = (new URL('mturk/externalSubmit', urlParams.get('turkSubmitTo'))).href;
+        form.method = 'post';
+        const inputAssignmentId = document.createElement('input');
+        inputAssignmentId.name = 'assignmentId';
+        inputAssignmentId.value = urlParams.get('assignmentId');
+        inputAssignmentId.hidden = true;
+        form.appendChild(inputAssignmentId);
+        form.submit();
+}
+      function IsOnTurk() {
+      try {
+      return ((window.location.host.indexOf('mturk')!=-1) || document.forms["mturk_form"] ||
+      (top != self && window.parent.location.host.indexOf("mturk") != -1));
+      } catch(err) {
+      // insecure content trying to access https://turk probably, so say yes:
+      return true;
+      }
+      }
+      function GetAssignmentId() {
+      var assignmentId = turkGetParam( 'assignment_id', 'NONE' );
+      return assignmentId;
+      }	
 </script>
 </body>
 
