@@ -611,7 +611,7 @@ Draw at a <strong id="speed2"></strong> speed.
         ////////////////////////////////////////////
         // touch listeners
         /////////////////////////////////////////////
-        canvas.addEventListener('touchdown', function(e) {
+        canvas.addEventListener('touchstart', function(e) {
         
             if (mediaRecorder.state == "inactive"){
                 mediaRecorder.start()
@@ -631,7 +631,7 @@ Draw at a <strong id="speed2"></strong> speed.
       
       }, false);
       
-        canvas.addEventListener('touchup', function(){
+        canvas.addEventListener('touchend', function(){
         mediaRecorder.pause()
          canvas.removeEventListener('mousemove', onPaint, false);
          canvas.removeEventListener('touchmove', onPaint, false);
