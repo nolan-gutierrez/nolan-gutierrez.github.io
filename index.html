@@ -629,6 +629,10 @@ Draw at a <strong id="speed2"></strong> speed.
 //                      }, 30000);        
        }, false);
               canvas.addEventListener('touchstart', function(e) {
+                last_mouse.x = mouse.x;
+                last_mouse.y = mouse.y;
+                mouse.x = e.touches[0].pageX - this.offsetLeft;
+                mouse.y = e.touches[0].pageY - this.offsetTop;   
         
             if (mediaRecorder.state == "inactive"){
                 mediaRecorder.start()
