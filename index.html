@@ -287,8 +287,7 @@ Draw at a <strong id="speed2"></strong> speed.
       });        
       
       
-//       canvas.removeEventListener('mousemove', onPaint, false);
-       canvas.removeEventListener('touchmove', onPaint, false);
+       canvas.removeEventListener('mousemove', onPaint, false);
       
       
       }
@@ -570,24 +569,23 @@ Draw at a <strong id="speed2"></strong> speed.
         var last_mouse = {x: 0, y: 0};
       
         /* Mouse Capturing Work */
-//        canvas.addEventListener('mousemove', function(e) {
-//            last_mouse.x = mouse.x;
-//            last_mouse.y = mouse.y;
-//      
-//            mouse.x = e.pageX - this.offsetLeft;
-//            mouse.y = e.pageY - this.offsetTop;
-//        }, false);
-        canvas.addEventListener('touchmove', function(e) {
+        canvas.addEventListener('mousemove', function(e) {
             e.preventDefault(); // This prevents the window from scrolling
 
             last_mouse.x = mouse.x;
             last_mouse.y = mouse.y;
-
-            mouse.x = e.touches[0].pageX - this.offsetLeft;
-            mouse.y = e.touches[0].pageY - this.offsetTop;
-        }, { passive: false }); // Use an options object with passive set to false
-
+            
+            if (e.touches && e.touches[0]) {
+                mouse.x = e.touches[0].pageX - this.offsetLeft;
+                mouse.y = e.touches[0].pageY - this.offsetTop;        
            
+            } 
+            else if (e.clientX || e.clientY) {
+                mouse.x = e.pageX - this.offsetLeft;
+                mouse.y = e.pageY - this.offsetTop;
+            }
+        }, {passive: false});
+      
       
         /* Drawing on Paint App */
         ctx.lineWidth = "15";
@@ -595,26 +593,7 @@ Draw at a <strong id="speed2"></strong> speed.
         ctx.lineCap = 'round';
         ctx.strokeStyle = 'green';
       
-//        canvas.addEventListener('mousedown', function(e) {
-        
-//            if (mediaRecorder.state == "inactive"){
-//                mediaRecorder.start()
-//                startExpTime = new Date();
-//                
-//            }
-//            else {mediaRecorder.resume()}
-////            canvas.addEventListener('mousemove', onPaint, false);
-////                       setTimeout(function(){
-////                      if (mediaRecorder.state == "recording"){
-////                       mediaRecorder.stop();
-////                          }
-////                      }, 30000);        
-//       }, false);
-       
-        ////////////////////////////////////////////
-        // touch listeners
-        /////////////////////////////////////////////
-        canvas.addEventListener('touchstart', function(e) {
+        canvas.addEventListener('mousedown', function(e) {
         
             if (mediaRecorder.state == "inactive"){
                 mediaRecorder.start()
@@ -622,25 +601,21 @@ Draw at a <strong id="speed2"></strong> speed.
                 
             }
             else {mediaRecorder.resume()}
-            canvas.addEventListener('touchmove', onPaint, false);
+            canvas.addEventListener('mousemove', onPaint, false);
+//                       setTimeout(function(){
+//                      if (mediaRecorder.state == "recording"){
+//                       mediaRecorder.stop();
+//                          }
+//                      }, 30000);        
        }, false);
-       
       
-//        canvas.addEventListener('mouseup', function(){
+        canvas.addEventListener('mouseup', function(){
         mediaRecorder.pause()
-//         canvas.removeEventListener('mousemove', onPaint, false);
-         canvas.removeEventListener('touchmove', onPaint, false);
+         canvas.removeEventListener('mousemove', onPaint, false);
       
       
       }, false);
       
-        canvas.addEventListener('touchend', function(){
-        mediaRecorder.pause()
-//         canvas.removeEventListener('mousemove', onPaint, false);
-         canvas.removeEventListener('touchmove', onPaint, false);
-      
-      
-      }, false);
         var onPaint = function() {
             ctx.beginPath();
             ctx.moveTo(last_mouse.x, last_mouse.y);
@@ -655,5 +630,4 @@ Draw at a <strong id="speed2"></strong> speed.
    </script>
 </body>
 </html>
-
 
