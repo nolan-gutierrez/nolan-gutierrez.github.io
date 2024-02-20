@@ -287,7 +287,7 @@ Draw at a <strong id="speed2"></strong> speed.
       });        
       
       
-       canvas.removeEventListener('mousemove', onPaint, false);
+//       canvas.removeEventListener('mousemove', onPaint, false);
        canvas.removeEventListener('touchmove', onPaint, false);
       
       
@@ -570,13 +570,13 @@ Draw at a <strong id="speed2"></strong> speed.
         var last_mouse = {x: 0, y: 0};
       
         /* Mouse Capturing Work */
-        canvas.addEventListener('mousemove', function(e) {
-            last_mouse.x = mouse.x;
-            last_mouse.y = mouse.y;
-      
-            mouse.x = e.pageX - this.offsetLeft;
-            mouse.y = e.pageY - this.offsetTop;
-        }, false);
+//        canvas.addEventListener('mousemove', function(e) {
+//            last_mouse.x = mouse.x;
+//            last_mouse.y = mouse.y;
+//      
+//            mouse.x = e.pageX - this.offsetLeft;
+//            mouse.y = e.pageY - this.offsetTop;
+//        }, false);
         canvas.addEventListener('touchmove', function(e) {
             e.preventDefault(); // This prevents the window from scrolling
 
@@ -595,21 +595,21 @@ Draw at a <strong id="speed2"></strong> speed.
         ctx.lineCap = 'round';
         ctx.strokeStyle = 'green';
       
-        canvas.addEventListener('mousedown', function(e) {
+//        canvas.addEventListener('mousedown', function(e) {
         
-            if (mediaRecorder.state == "inactive"){
-                mediaRecorder.start()
-                startExpTime = new Date();
-                
-            }
-            else {mediaRecorder.resume()}
-            canvas.addEventListener('mousemove', onPaint, false);
-//                       setTimeout(function(){
-//                      if (mediaRecorder.state == "recording"){
-//                       mediaRecorder.stop();
-//                          }
-//                      }, 30000);        
-       }, false);
+//            if (mediaRecorder.state == "inactive"){
+//                mediaRecorder.start()
+//                startExpTime = new Date();
+//                
+//            }
+//            else {mediaRecorder.resume()}
+////            canvas.addEventListener('mousemove', onPaint, false);
+////                       setTimeout(function(){
+////                      if (mediaRecorder.state == "recording"){
+////                       mediaRecorder.stop();
+////                          }
+////                      }, 30000);        
+//       }, false);
        
         ////////////////////////////////////////////
         // touch listeners
@@ -626,9 +626,9 @@ Draw at a <strong id="speed2"></strong> speed.
        }, false);
        
       
-        canvas.addEventListener('mouseup', function(){
+//        canvas.addEventListener('mouseup', function(){
         mediaRecorder.pause()
-         canvas.removeEventListener('mousemove', onPaint, false);
+//         canvas.removeEventListener('mousemove', onPaint, false);
          canvas.removeEventListener('touchmove', onPaint, false);
       
       
@@ -636,7 +636,7 @@ Draw at a <strong id="speed2"></strong> speed.
       
         canvas.addEventListener('touchend', function(){
         mediaRecorder.pause()
-         canvas.removeEventListener('mousemove', onPaint, false);
+//         canvas.removeEventListener('mousemove', onPaint, false);
          canvas.removeEventListener('touchmove', onPaint, false);
       
       
