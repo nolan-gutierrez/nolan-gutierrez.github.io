@@ -288,6 +288,7 @@ Draw at a <strong id="speed2"></strong> speed.
       
       
        canvas.removeEventListener('mousemove', onPaint, false);
+       canvas.removeEventListener('touchmove', onPaint, false);
       
       
       }
@@ -586,7 +587,22 @@ Draw at a <strong id="speed2"></strong> speed.
             }
         }, {passive: false});
       
-      
+              canvas.addEventListener('touchmove', function(e) {
+            e.preventDefault(); // This prevents the window from scrolling
+
+            last_mouse.x = mouse.x;
+            last_mouse.y = mouse.y;
+            
+            if (e.touches && e.touches[0]) {
+                mouse.x = e.touches[0].pageX - this.offsetLeft;
+                mouse.y = e.touches[0].pageY - this.offsetTop;        
+           
+            } 
+            else if (e.clientX || e.clientY) {
+                mouse.x = e.pageX - this.offsetLeft;
+                mouse.y = e.pageY - this.offsetTop;
+            }
+        }, {passive: false});
         /* Drawing on Paint App */
         ctx.lineWidth = "15";
         ctx.lineJoin = 'round';
@@ -608,14 +624,31 @@ Draw at a <strong id="speed2"></strong> speed.
 //                          }
 //                      }, 30000);        
        }, false);
-      
+              canvas.addEventListener('touchstart', function(e) {
+        
+            if (mediaRecorder.state == "inactive"){
+                mediaRecorder.start()
+                startExpTime = new Date();
+                
+            }
+            else {mediaRecorder.resume()}
+            canvas.addEventListener('touchmove', onPaint, false);
+//                       setTimeout(function(){
+//                      if (mediaRecorder.state == "recording"){
+//                       mediaRecorder.stop();
+//                          }
+//                      }, 30000);        
+       }, false);
         canvas.addEventListener('mouseup', function(){
         mediaRecorder.pause()
          canvas.removeEventListener('mousemove', onPaint, false);
       
-      
       }, false);
+         canvas.addEventListener('touchend', function(){
+        mediaRecorder.pause()
+         canvas.removeEventListener('touchmove', onPaint, false);
       
+      }, false);     
         var onPaint = function() {
             ctx.beginPath();
             ctx.moveTo(last_mouse.x, last_mouse.y);
