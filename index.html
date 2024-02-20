@@ -643,24 +643,46 @@ Draw at a <strong id="speed2"></strong> speed.
 //                          }
 //                      }, 30000);        
        }, false);
-        canvas.addEventListener('mouseup', function(){
+        canvas.addEventListener('mouseup', function(e){
         mediaRecorder.pause()
          canvas.removeEventListener('mousemove', onPaint, false);
       
       }, false);
-         canvas.addEventListener('touchend', function(){
+         canvas.addEventListener('touchend', function(e){
         mediaRecorder.pause()
          canvas.removeEventListener('touchmove', onPaint, false);
       
       }, false);     
-        var onPaint = function() {
+        var onPaint = function(e) {
+            if (e.touches && e.touches[0]) {
             ctx.beginPath();
             ctx.moveTo(last_mouse.x, last_mouse.y);
             strokes.push([last_mouse.x, last_mouse.y, mouse.x, mouse.y]);
             ctx.lineTo(mouse.x, mouse.y);
             ctx.closePath();
             ctx.stroke();
+            }
+            else if (e.clientX || e.clientY) {
+            ctx.beginPath();
+            ctx.moveTo(last_mouse.x, last_mouse.y);
+            strokes.push([last_mouse.x, last_mouse.y, mouse.x, mouse.y]);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.closePath();
+            ctx.stroke();
+            }
+
+
+
+
+
+
+
+
+
+
+
         };
+
       
       }());
       
