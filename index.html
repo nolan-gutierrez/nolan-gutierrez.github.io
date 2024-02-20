@@ -288,6 +288,7 @@ Draw at a <strong id="speed2"></strong> speed.
       
       
        canvas.removeEventListener('mousemove', onPaint, false);
+       canvas.removeEventListener('touchmove', onPaint, false);
       
       
       }
@@ -576,7 +577,14 @@ Draw at a <strong id="speed2"></strong> speed.
             mouse.x = e.pageX - this.offsetLeft;
             mouse.y = e.pageY - this.offsetTop;
         }, false);
+         canvas.addEventListener('touchmove', function(e) {
+            last_mouse.x = mouse.x;
+            last_mouse.y = mouse.y;
       
+            mouse.x = e.pageX - this.offsetLeft;
+            mouse.y = e.pageY - this.offsetTop;
+        }, false);
+           
       
         /* Drawing on Paint App */
         ctx.lineWidth = "15";
@@ -599,14 +607,37 @@ Draw at a <strong id="speed2"></strong> speed.
 //                          }
 //                      }, 30000);        
        }, false);
+       
+        ////////////////////////////////////////////
+        // touch listeners
+        /////////////////////////////////////////////
+        canvas.addEventListener('touchdown', function(e) {
+        
+            if (mediaRecorder.state == "inactive"){
+                mediaRecorder.start()
+                startExpTime = new Date();
+                
+            }
+            else {mediaRecorder.resume()}
+            canvas.addEventListener('touchmove', onPaint, false);
+       }, false);
+       
       
         canvas.addEventListener('mouseup', function(){
         mediaRecorder.pause()
          canvas.removeEventListener('mousemove', onPaint, false);
+         canvas.removeEventListener('touchmove', onPaint, false);
       
       
       }, false);
       
+        canvas.addEventListener('touchup', function(){
+        mediaRecorder.pause()
+         canvas.removeEventListener('mousemove', onPaint, false);
+         canvas.removeEventListener('touchmove', onPaint, false);
+      
+      
+      }, false);
         var onPaint = function() {
             ctx.beginPath();
             ctx.moveTo(last_mouse.x, last_mouse.y);
